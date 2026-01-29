@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADVANTA | Login</title>
+    <link rel="stylesheet" href="Homepage.css">
+</head>
+<body>
+    <!--
+    <h1>Log In</h1>
+    <button onclick="window.location.href='index.html'" class="nav-link">Go Home</button>
+    -->
+    <header class="navigation">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="nav-logo">
+                <span>A</span>DVANTA
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="nav-links">
+                <!-- <a href="#topics" class="nav-link">Resources</a> -->
+                <a href="courses.html" class="nav-link">Courses</a>
+                <a href="user_progress.html" class="nav-link">My Progress</a>
+                <a href="tutors_page.html" class="nav-link">Tutors</a>
+                <a href="about.html" class="nav-link">About</a>
+                <!-- <a href="#contact" class="nav-link">Contact</a> --> 
+            </nav>
+
+            <!-- Desktop Actions -->
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <!-- Sun icon (for dark mode) -->
+                    <svg class="icon icon-sm" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <!-- Moon icon (for light mode) - hidden by default -->
+                    <svg class="icon icon-sm" id="moonIcon" style="display: none;" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button onclick="window.location.href='login.html'" class="btn btn-ghost" id="authButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream">Advanta Stream</button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <svg class="icon" id="menuIcon" viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="icon" id="closeIcon" style="display: none;" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="courses.html" class="nav-link">Courses</a>
+            <a href="user_progress.html" class="nav-link">My Progress</a>
+            <a href="tutors_page.html" class="nav-link">Tutors</a>
+            <a href="about.html" class="nav-link">About</a>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button class="btn btn-ghost" style="flex: 1;" id="mobileAuthButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream" style="flex: 1;">Advanta Stream</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section style="min-height: calc(100vh - 200px); display: flex; align-items: center; justify-content: center; padding: 4rem 1.5rem; background: linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 50%);">
+            <div style="max-width: 450px; width: 100%;">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1.25rem; border-radius: 999px; background: hsl(var(--card) / 0.7); border: 1px solid hsl(var(--primary) / 0.35); color: hsl(var(--primary)); font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 1rem;">
+                        <span id="formBadge">Sign In</span>
+                    </div>
+                    <h2 id="formTitle" style="font-size: 2.5rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem;">
+                        Welcome Back
+                    </h2>
+                    <p id="formDescription" style="color: hsl(var(--muted-foreground)); font-size: 1rem;">
+                        Sign in to access your personalized learning dashboard
+                    </p>
+                </div>
+                
+                <div style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 2.5rem; box-shadow: 0 8px 16px -8px hsl(var(--foreground) / 0.1);">
+                    <!-- Sign In Form -->
+                    <form id="loginForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="flex: 1;">
+                                <label for="loginFirstName" style="display: block; color: hsl(var(--foreground)); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">First Name</label>
+                                <input 
+                                    type="text" 
+                                    id="loginFirstName"
+                                    class="cta-input" 
+                                    placeholder="First name" 
+                                    required
+                                    style="width: 100%; padding: 0.875rem 1rem; border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground)); font-size: 1rem; transition: var(--transition-smooth);"
+                                >
+                            </div>
+                            <div style="flex: 1;">
+                                <label for="loginLastName" style="display: block; color: hsl(var(--foreground)); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">Last Name</label>
+                                <input 
+                                    type="text" 
+                                    id="loginLastName"
+                                    class="cta-input" 
+                                    placeholder="Last name" 
+                                    required
+                                    style="width: 100%; padding: 0.875rem 1rem; border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground)); font-size: 1rem; transition: var(--transition-smooth);"
+                                >
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="email" style="display: block; color: hsl(var(--foreground)); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">Email Address</label>
+                            <input 
+                                type="email" 
+                                id="email"
+                                class="cta-input" 
+                                placeholder="your.email@example.com" 
+                                required
+                                style="width: 100%; padding: 0.875rem 1rem; border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground)); font-size: 1rem; transition: var(--transition-smooth);"
+                            >
+                        </div>
+                        
+                        <div>
+                            <label for="password" style="display: block; color: hsl(var(--foreground)); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">Password</label>
+                            <div style="position: relative; display: flex; align-items: center;">
+                                <input 
+                                    type="password" 
+                                    id="password"
+                                    class="cta-input" 
+                                    placeholder="Enter your password" 
+                                    required
+                                    style="width: 100%; padding: 0.875rem 1rem; padding-right: 2.5rem; border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground)); font-size: 1rem; transition: var(--transition-smooth);"
+                                >
+                                <button type="button" class="toggle-password-btn" data-target="password" style="position: absolute; right: 0.75rem; background: none; border: none; cursor: pointer; padding: 0.5rem; color: hsl(var(--foreground)); display: flex; align-items: center; justify-content: center;">
+                                    <svg class="eye-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.875rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: hsl(var(--foreground));">
+                                <input type="checkbox" style="width: 1rem; height: 1rem; cursor: pointer;">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" style="color: hsl(var(--primary)); text-decoration: none; font-weight: 600;">Forgot password?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; font-weight: 700;">
+                            Sign In
+                        </button>
+                    </form>
+
+                    <!-- Sign Up Form (Hidden by default) -->
+                    <form id="signupForm" style="display: none; flex-direction: column; gap: 1.5rem;">
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="flex: 1;">
+                                <label for="signupFirstName" style="display: block; color: hsl(var(--foreground)); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">First Name</label>
+                                <input 
+                                    type="text" 
+                                    id="signupFirstName"
+                                    class="cta-input" 
+                                    placeholder="John" 
+                                    required
+                                    style="width: 100%; padding: 0.875rem 1rem; border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground)); font-size: 1rem; transition: var(--transition-smooth);"
+                                >
+                            </div>
+                            <div style="flex: 1;">
+                                <label for="signupLastName" style="display: block; color: hsl(var(--foreground)); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">Last Name</label>
+                                <input 
+                                    type="text" 
+                                    id="signupLastName"
+                                    class="cta-input" 
+                                    placeholder="Doe" 
+                                    required
+                                    style="width: 100%; padding: 0.875rem 1rem; border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground)); font-size: 1rem; transition: var(--transition-smooth);"
+                                >
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="signupEmail" style="display: block; color: hsl(var(--foreground)); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">Email Address</label>
+                            <input 
+                                type="email" 
+                                id="signupEmail"
+                                class="cta-input" 
+                                placeholder="your.email@example.com" 
+                                required
+                                style="width: 100%; padding: 0.875rem 1rem; border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground)); font-size: 1rem; transition: var(--transition-smooth);"
+                            >
+                        </div>
+                        
+                        <div>
+                            <label for="signupPassword" style="display: block; color: hsl(var(--foreground)); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">Password</label>
+                            <div style="position: relative; display: flex; align-items: center;">
+                                <input 
+                                    type="password" 
+                                    id="signupPassword"
+                                    class="cta-input" 
+                                    placeholder="Create a password" 
+                                    required
+                                    style="width: 100%; padding: 0.875rem 1rem; padding-right: 2.5rem; border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground)); font-size: 1rem; transition: var(--transition-smooth);"
+                                >
+                                <button type="button" class="toggle-password-btn" data-target="signupPassword" style="position: absolute; right: 0.75rem; background: none; border: none; cursor: pointer; padding: 0.5rem; color: hsl(var(--foreground)); display: flex; align-items: center; justify-content: center;">
+                                    <svg class="eye-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="signupConfirmPassword" style="display: block; color: hsl(var(--foreground)); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">Confirm Password</label>
+                            <div style="position: relative; display: flex; align-items: center;">
+                                <input 
+                                    type="password" 
+                                    id="signupConfirmPassword"
+                                    class="cta-input" 
+                                    placeholder="Confirm your password" 
+                                    required
+                                    style="width: 100%; padding: 0.875rem 1rem; padding-right: 2.5rem; border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground)); font-size: 1rem; transition: var(--transition-smooth);"
+                                >
+                                <button type="button" class="toggle-password-btn" data-target="signupConfirmPassword" style="position: absolute; right: 0.75rem; background: none; border: none; cursor: pointer; padding: 0.5rem; color: hsl(var(--foreground)); display: flex; align-items: center; justify-content: center;">
+                                    <svg class="eye-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style="font-size: 0.875rem;">
+                            <label style="display: flex; align-items: start; gap: 0.5rem; cursor: pointer; color: hsl(var(--foreground));">
+                                <input type="checkbox" required style="width: 1rem; height: 1rem; cursor: pointer; margin-top: 0.125rem;">
+                                <span>I agree to the <a href="#" style="color: hsl(var(--primary)); text-decoration: none; font-weight: 600;">Terms of Service</a> and <a href="#" style="color: hsl(var(--primary)); text-decoration: none; font-weight: 600;">Privacy Policy</a></span>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; font-weight: 700;">
+                            Create Account
+                        </button>
+                    </form>
+                    
+                    <div style="margin-top: 1.5rem; text-align: center; padding-top: 1.5rem; border-top: 1px solid hsl(var(--border));">
+                        <p id="toggleText" style="color: hsl(var(--muted-foreground)); font-size: 0.9rem;">
+                            Don't have an account? <a href="#" id="toggleLink" style="color: hsl(var(--primary)); text-decoration: none; font-weight: 700;">Sign up</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Custom Popup Modal -->
+        <div id="customPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center;">
+            <div style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 2rem; max-width: 400px; width: 90%; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
+                <h3 id="popupTitle" style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--foreground)); margin-bottom: 1rem;">
+                    Sign In was Unsuccessful
+                </h3>
+                <p id="popupMessage" style="color: hsl(var(--muted-foreground)); font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">
+                    Please check your information and try again.
+                </p>
+                <button id="popupCloseBtn" style="width: 100%; padding: 0.75rem 1rem; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer; font-size: 1rem;">
+                    OK
+                </button>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy</a>
+                    <a href="#" class="footer-link">Terms</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+                <div class="footer-social">
+                    <a href="mailto:hello@advanta.com" class="social-link" aria-label="Email">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Chat">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+       <!-- 
+    ===========================================
+    JAVASCRIPT
+    ===========================================
+    This section demonstrates vanilla JS equivalents of React patterns:
+    - useState → Regular variables + DOM updates
+    - useEffect → DOMContentLoaded or direct calls
+    - Array.map() for rendering → forEach with innerHTML
+    - onClick handlers → addEventListener
+    - Conditional rendering → if/else with style.display
+    -->
+    <script>
+        /**
+         * Show custom popup modal
+         */
+        function showPopup(message) {
+            const popup = document.getElementById('customPopup');
+            const popupMessage = document.getElementById('popupMessage');
+            popupMessage.textContent = message;
+            popup.style.display = 'flex';
+        }
+
+        /**
+         * Hide custom popup modal
+         */
+        function hidePopup() {
+            const popup = document.getElementById('customPopup');
+            popup.style.display = 'none';
+        }
+
+        /**
+         * Setup popup close button
+         */
+        function setupPopupClose() {
+            const closeBtn = document.getElementById('popupCloseBtn');
+            const popup = document.getElementById('customPopup');
+            
+            closeBtn.addEventListener('click', hidePopup);
+            
+            // Close popup when clicking outside of it
+            popup.addEventListener('click', (e) => {
+                if (e.target === popup) {
+                    hidePopup();
+                }
+            });
+        }
+
+        /**
+         * Toggle password visibility
+         */
+        function setupPasswordToggle() {
+            const toggleButtons = document.querySelectorAll('.toggle-password-btn');
+            
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    const targetId = button.getAttribute('data-target');
+                    const input = document.getElementById(targetId);
+                    const eyeIcon = button.querySelector('.eye-icon');
+                    
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                    } else {
+                        input.type = 'password';
+                    }
+                });
+            });
+        }
+
+        /**
+         * Toggle mobile menu
+         */
+        function setupMobileMenu() {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            
+            let isMenuOpen = false;
+
+            menuBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                mobileMenu.classList.toggle('active', isMenuOpen);
+                menuIcon.style.display = isMenuOpen ? 'none' : 'block';
+                closeIcon.style.display = isMenuOpen ? 'block' : 'none';
+            });
+
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    isMenuOpen = false;
+                    mobileMenu.classList.remove('active');
+                    menuIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                });
+            });
+        }
+
+        /**
+         * Theme toggle functionality
+         */
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            let isDark = localStorage.getItem('theme') !== 'light';
+            
+            function applyTheme() {
+                if (isDark) {
+                    document.body.classList.remove('light-theme');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                } else {
+                    document.body.classList.add('light-theme');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                }
+            }
+            
+            applyTheme();
+
+            themeToggle.addEventListener('click', () => {
+                isDark = !isDark;
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                applyTheme();
+            });
+        }
+
+        /**
+         * Update auth buttons based on login status
+         */
+        function updateAuthButtons() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const authButton = document.getElementById('authButton');
+            const mobileAuthButton = document.getElementById('mobileAuthButton');
+            
+            if (isLoggedIn && authButton) {
+                const userName = localStorage.getItem('userName') || localStorage.getItem('userEmail') || 'User';
+                const firstName = userName.split(' ')[0];
+                
+                authButton.textContent = firstName;
+                authButton.onclick = () => window.location.href = 'account.html';
+                
+                if (mobileAuthButton) {
+                    mobileAuthButton.textContent = firstName;
+                    mobileAuthButton.onclick = () => window.location.href = 'account.html';
+                }
+            }
+        }
+
+        /**
+         * Credential management system
+         */
+        function getStoredCredentials() {
+            const stored = localStorage.getItem('userCredentials');
+            return stored ? JSON.parse(stored) : null;
+        }
+
+        function saveCredentials(firstName, lastName, email, password) {
+            // Clear old credentials and legacy items
+            localStorage.removeItem('userCredentials');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('isLoggedIn');
+            
+            // Save new credentials
+            const credentials = {
+                firstName: firstName.toLowerCase(),
+                lastName: lastName.toLowerCase(),
+                email: email,
+                password: password
+            };
+            localStorage.setItem('userCredentials', JSON.stringify(credentials));
+        }
+
+        function validateCredentials(firstName, lastName, email, password) {
+            const stored = getStoredCredentials();
+            
+            const inputFirstName = firstName.toLowerCase();
+            const inputLastName = lastName.toLowerCase();
+            
+            // Check if credentials exist and all fields match
+            if (!stored || 
+                stored.firstName !== inputFirstName || 
+                stored.lastName !== inputLastName || 
+                stored.email !== email || 
+                stored.password !== password) {
+                showPopup('Name, email, or password is not correct.');
+                return false;
+            }
+            
+            return true;
+        }
+
+        /**
+         * Login form submission handler
+         */
+        function setupLoginForm() {
+            const loginForm = document.getElementById('loginForm');
+            
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const firstName = document.getElementById('loginFirstName').value.trim();
+                const lastName = document.getElementById('loginLastName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                
+                // Validate against stored credentials
+                if (validateCredentials(firstName, lastName, email, password)) {
+                    // Save login state to localStorage
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userName', firstName + ' ' + lastName);
+                    localStorage.setItem('userEmail', email);
+                    
+                    // Redirect to My Progress page
+                    window.location.href = 'user_progress.html';
+                }
+            });
+        }
+
+        /**
+         * Sign up form submission handler
+         */
+        function setupSignupForm() {
+            const signupForm = document.getElementById('signupForm');
+            
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const firstName = document.getElementById('signupFirstName').value.trim();
+                const lastName = document.getElementById('signupLastName').value.trim();
+                const email = document.getElementById('signupEmail').value.trim();
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('signupConfirmPassword').value;
+                
+                // Validate passwords match
+                if (password !== confirmPassword) {
+                    showPopup('Passwords do not match!');
+                    return;
+                }
+                
+                // Validate all fields are filled
+                if (!firstName || !lastName || !email || !password) {
+                    showPopup('Please fill in all fields.');
+                    return;
+                }
+                
+                // Clear any old credentials and save new ones
+                saveCredentials(firstName, lastName, email, password);
+                
+                // Save login state to localStorage
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userName', firstName + ' ' + lastName);
+                
+                // Redirect to My Progress page
+                window.location.href = 'user_progress.html';
+            });
+        }
+
+        /**
+         * Toggle between sign in and sign up forms
+         */
+        function setupFormToggle() {
+            const toggleLink = document.getElementById('toggleLink');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const formBadge = document.getElementById('formBadge');
+            const formTitle = document.getElementById('formTitle');
+            const formDescription = document.getElementById('formDescription');
+            const toggleText = document.getElementById('toggleText');
+            
+            let isSignIn = true;
+            
+            toggleLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                isSignIn = !isSignIn;
+                
+                if (isSignIn) {
+                    // Show sign in form
+                    loginForm.style.display = 'flex';
+                    signupForm.style.display = 'none';
+                    formBadge.textContent = 'Sign In';
+                    formTitle.textContent = 'Welcome Back';
+                    formDescription.textContent = 'Sign in to access your personalized learning dashboard';
+                    toggleText.innerHTML = 'Don\'t have an account? <a href="#" id="toggleLink" style="color: hsl(var(--primary)); text-decoration: none; font-weight: 700;">Sign up</a>';
+                } else {
+                    // Show sign up form
+                    loginForm.style.display = 'none';
+                    signupForm.style.display = 'flex';
+                    formBadge.textContent = 'Sign Up';
+                    formTitle.textContent = 'Create Account';
+                    formDescription.textContent = 'Join thousands of students learning with ADVANTA';
+                    toggleText.innerHTML = 'Already have an account? <a href="#" id="toggleLink" style="color: hsl(var(--primary)); text-decoration: none; font-weight: 700;">Sign in</a>';
+                }
+                
+                // Re-attach the click listener to the new link
+                document.getElementById('toggleLink').addEventListener('click', arguments.callee);
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setupPopupClose();
+            setupPasswordToggle();
+            setupMobileMenu();
+            setupThemeToggle();
+            updateAuthButtons();
+            setupLoginForm();
+            setupSignupForm();
+            setupFormToggle();
+        });
+    </script>
+
+</body>
+</html>
