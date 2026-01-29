@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADVANTA | Account Settings</title>
+    <link rel="stylesheet" href="Homepage.css">
+</head>
+<body>
+    <header class="navigation">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="nav-logo">
+                <span>A</span>DVANTA
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="nav-links">
+                <a href="courses.html" class="nav-link">Courses</a>
+                <a href="user_progress.html" class="nav-link">My Progress</a>
+                <a href="tutors_page.html" class="nav-link">Tutors</a>
+                <a href="about.html" class="nav-link">About</a>
+            </nav>
+
+            <!-- Desktop Actions -->
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="icon icon-sm" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <svg class="icon icon-sm" id="moonIcon" style="display: none;" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button onclick="window.location.href='login.html'" class="btn btn-ghost" id="authButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream">Advanta Stream</button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <svg class="icon" id="menuIcon" viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="icon" id="closeIcon" style="display: none;" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="courses.html" class="nav-link">Courses</a>
+            <a href="user_progress.html" class="nav-link">My Progress</a>
+            <a href="tutors_page.html" class="nav-link">Tutors</a>
+            <a href="about.html" class="nav-link">About</a>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button class="btn btn-ghost" style="flex: 1;" id="mobileAuthButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream" style="flex: 1;">Advanta Stream</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section style="min-height: calc(100vh - 200px); padding: 4rem 1.5rem; background: linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 50%);">
+            <div class="container" style="max-width: 800px;">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <div style="display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1.25rem; border-radius: 999px; background: hsl(var(--card) / 0.7); border: 1px solid hsl(var(--primary) / 0.35); color: hsl(var(--primary)); font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 1rem;">
+                        Account Settings
+                    </div>
+                    <h2 style="font-size: 2.5rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem;">
+                        My Account
+                    </h2>
+                </div>
+                
+                <!-- Account Info Card -->
+                <div style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 2.5rem; box-shadow: 0 8px 16px -8px hsl(var(--foreground) / 0.1); margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: hsl(var(--foreground)); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid hsl(var(--border));">
+                        Personal Information
+                    </h3>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: hsl(var(--background)); border-radius: var(--radius);">
+                            <div>
+                                <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.25rem;">Name</div>
+                                <div style="font-weight: 600; color: hsl(var(--foreground));" id="displayName">Loading...</div>
+                            </div>
+                            <button onclick="alert('Edit functionality coming soon!')" class="btn btn-ghost" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Edit</button>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: hsl(var(--background)); border-radius: var(--radius);">
+                            <div>
+                                <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.25rem;">Email</div>
+                                <div style="font-weight: 600; color: hsl(var(--foreground));" id="displayEmail">Loading...</div>
+                            </div>
+                            <button onclick="alert('Edit functionality coming soon!')" class="btn btn-ghost" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Edit</button>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: hsl(var(--background)); border-radius: var(--radius);">
+                            <div>
+                                <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.25rem;">Password</div>
+                                <div style="font-weight: 600; color: hsl(var(--foreground));">••••••••</div>
+                            </div>
+                            <button onclick="alert('Change password functionality coming soon!')" class="btn btn-ghost" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Change</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions Card -->
+                <div style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 2.5rem; box-shadow: 0 8px 16px -8px hsl(var(--foreground) / 0.1);">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: hsl(var(--foreground)); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid hsl(var(--border));">
+                        Account Actions
+                    </h3>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <button onclick="window.location.href='user_progress.html'" class="btn btn-ghost" style="width: 100%; padding: 1rem; justify-content: flex-start; font-size: 1rem;">
+                            <svg class="icon" style="margin-right: 0.75rem;" viewBox="0 0 24 24">
+                                <path d="M9 11H3v2h6v-2zm0 4H3v2h6v-2zm0-8H3v2h6V7zm10 4h-6v2h6v-2zm0 4h-6v2h6v-2zm0-8h-6v2h6V7z"></path>
+                            </svg>
+                            View My Progress
+                        </button>
+                        
+                        <button onclick="window.location.href='courses.html'" class="btn btn-ghost" style="width: 100%; padding: 1rem; justify-content: flex-start; font-size: 1rem;">
+                            <svg class="icon" style="margin-right: 0.75rem;" viewBox="0 0 24 24">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                            Browse Courses
+                        </button>
+                        
+                        <div style="border-top: 1px solid hsl(var(--border)); margin: 1rem 0;"></div>
+                        
+                        <button id="signOutBtn" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; background: hsl(var(--destructive)); color: white;">
+                            <svg class="icon" style="margin-right: 0.75rem;" viewBox="0 0 24 24">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                            Sign Out
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy</a>
+                    <a href="#" class="footer-link">Terms</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+                <div class="footer-social">
+                    <a href="mailto:hello@advanta.com" class="social-link" aria-label="Email">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Chat">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function setupMobileMenu() {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            let isMenuOpen = false;
+
+            menuBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                mobileMenu.classList.toggle('active', isMenuOpen);
+                menuIcon.style.display = isMenuOpen ? 'none' : 'block';
+                closeIcon.style.display = isMenuOpen ? 'block' : 'none';
+            });
+
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    isMenuOpen = false;
+                    mobileMenu.classList.remove('active');
+                    menuIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                });
+            });
+        }
+
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            let isDark = localStorage.getItem('theme') !== 'light';
+            
+            function applyTheme() {
+                if (isDark) {
+                    document.body.classList.remove('light-theme');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                } else {
+                    document.body.classList.add('light-theme');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                }
+            }
+            
+            applyTheme();
+            themeToggle.addEventListener('click', () => {
+                isDark = !isDark;
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                applyTheme();
+            });
+        }
+
+        function updateAuthButtons() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const authButton = document.getElementById('authButton');
+            const mobileAuthButton = document.getElementById('mobileAuthButton');
+            
+            if (isLoggedIn) {
+                const userName = localStorage.getItem('userName') || localStorage.getItem('userEmail') || 'User';
+                const firstName = userName.split(' ')[0];
+                
+                authButton.textContent = firstName;
+                authButton.onclick = () => window.location.href = 'account.html';
+                
+                mobileAuthButton.textContent = firstName;
+                mobileAuthButton.onclick = () => window.location.href = 'account.html';
+            }
+        }
+
+        function loadAccountInfo() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const userName = localStorage.getItem('userName') || 'User';
+            const userEmail = localStorage.getItem('userEmail') || 'user@example.com';
+            
+            document.getElementById('displayName').textContent = userName;
+            document.getElementById('displayEmail').textContent = userEmail;
+        }
+
+        function setupSignOut() {
+            document.getElementById('signOutBtn').addEventListener('click', () => {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userName');
+                window.location.href = 'index.html';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupMobileMenu();
+            setupThemeToggle();
+            updateAuthButtons();
+            loadAccountInfo();
+            setupSignOut();
+        });
+    </script>
+</body>
+</html>

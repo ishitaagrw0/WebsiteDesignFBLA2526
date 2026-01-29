@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADVANTA | Stream</title>
+    <link rel="stylesheet" href="Homepage.css">
+    <style>
+        /* ===========================================
+            STREAM SPECIFIC STYLES
+           =========================================== */
+        .stream-header {
+            background: linear-gradient(180deg, hsl(var(--primary) / 0.15) 0%, hsl(var(--accent) / 0.15) 40%, hsl(var(--background)) 80%, hsl(var(--background)) 100%);
+            padding: 4rem 1.5rem 2.5rem;
+            text-align: center;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (min-width: 768px) { .news-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .news-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .news-card {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .news-card:hover {
+            border-color: hsl(var(--primary) / 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -12px hsl(var(--primary) / 0.3);
+        }
+
+        .news-image {
+            height: 12rem;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .news-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-category {
+            font-size: 0.7rem;
+            color: hsl(var(--primary));
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+
+        .news-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+            color: hsl(var(--foreground));
+        }
+
+        .news-excerpt {
+            font-size: 0.875rem;
+            color: hsl(var(--muted-foreground));
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .news-footer {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid hsl(var(--border));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: hsl(var(--primary));
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .icon {
+            width: 1rem;
+            height: 1rem;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        /* --- MODAL SYSTEM --- */
+        #reportModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: hsl(var(--background) / 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        #reportModalContent {
+            background: hsl(var(--background));
+            border: 1px solid hsl(var(--border));
+            border-radius: 1.5rem;
+            padding: 0;
+            max-width: 800px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px -12px hsl(var(--foreground) / 0.3);
+        }
+
+        .modal-body {
+            padding: 3rem 2.5rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: hsl(var(--muted));
+            border: none;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: hsl(var(--foreground));
+            z-index: 10;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-close:hover {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+        }
+
+        .report-full-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        /* Skeleton Loading Shimmer */
+        .shimmer-box {
+            background: hsl(var(--muted) / 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-box::after {
+            content: "";
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            transform: translateX(-100%);
+            background: linear-gradient(90deg, transparent, hsl(var(--foreground) / 0.05), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
+
+        .footer {
+            padding: 2rem 0;
+            border-top: 1px solid hsl(var(--border));
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content { flex-direction: row; }
+        }
+
+        .footer-links { display: flex; gap: 2rem; }
+        .footer-link { font-size: 0.875rem; color: hsl(var(--muted-foreground)); text-decoration: none; transition: var(--transition-smooth); }
+        .footer-link:hover { color: hsl(var(--primary)); }
+    </style>
+</head>
+<body>
+
+    <!-- ADVANTA Standard Navigation -->
+    <header class="navigation">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="nav-logo">
+                <span>A</span>DVANTA
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="nav-links">
+                <a href="courses.html" class="nav-link">Courses</a>
+                <a href="user_progress.html" class="nav-link">My Progress</a>
+                <a href="tutors_page.html" class="nav-link">Tutors</a>
+                <a href="about.html" class="nav-link">About</a>
+            </nav>
+
+            <!-- Desktop Actions -->
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <!-- Sun icon (for dark mode) -->
+                    <svg class="icon icon-sm" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <!-- Moon icon (for light mode) - hidden by default -->
+                    <svg class="icon icon-sm" id="moonIcon" style="display: none;" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button onclick="window.location.href='login.html'" class="btn btn-ghost" id="authButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream">Advanta Stream</button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <svg class="icon" id="menuIcon" viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="icon" id="closeIcon" style="display: none;" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="courses.html" class="nav-link">Courses</a>
+            <a href="user_progress.html" class="nav-link">My Progress</a>
+            <a href="tutors_page.html" class="nav-link">Tutors</a>
+            <a href="about.html" class="nav-link">About</a>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button class="btn btn-ghost" style="flex: 1;" id="mobileAuthButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream" style="flex: 1;">Advanta Stream</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal Container -->
+    <div id="reportModal" onclick="closeReportModal(event)">
+        <div id="reportModalContent">
+            <button class="modal-close" aria-label="Close modal" onclick="closeReportModal(event, true)">✕</button>
+            <div id="modalInner">
+                <!-- Dynamically filled -->
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- Banner Section -->
+        <section class="stream-header">
+            <div class="container">
+                <h1 class="text-4xl md:text-5xl" style="display: inline-block; font-weight: 700; letter-spacing: 0.1em; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; padding: 1rem 2rem; border: 2px solid hsl(var(--primary) / 0.5); border-radius: 1rem; box-shadow: 0 4px 12px hsl(var(--primary) / 0.2);">
+                    ADVANTA STREAM
+                </h1>
+                <p style="color: hsl(var(--muted-foreground)); font-size: 1.125rem; max-width: 600px; margin: 1.5rem auto 0;">
+                    Learn the latest in technology with weekly reports on breakthroughs in AI, software, hardware, security, and more curated by the ADVANTA team.
+                </p>
+            </div>
+        </section>
+
+        <!-- News Feed Grid -->
+        <section style="padding: 2rem 0 6rem; background: hsl(var(--background));">
+            <div class="container">
+                <div id="newsGrid" class="news-grid">
+                    <!-- Loading Skeleton -->
+                    <div class="news-card"><div class="shimmer-box" style="height: 12rem;"></div><div class="news-content"><div class="shimmer-box" style="height: 1.2rem; width: 30%; margin-bottom: 1rem;"></div><div class="shimmer-box" style="height: 1.5rem; width: 90%; margin-bottom: 0.5rem;"></div><div class="shimmer-box" style="height: 3rem; width: 100%;"></div></div></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Standard ADVANTA Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy</a>
+                    <a href="#" class="footer-link">Terms</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="mailto:hello@advanta.com" class="nav-link" aria-label="Email">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const streamData = [
+            {
+                id: 1,
+                category: "AI & Future",
+                title: "Large Action Models: Navigating Beyond Chat",
+                excerpt: "The next phase of AI is here. New LAMs can now interact with web interfaces and software tools directly, automating complex workflows.",
+                content: `
+                    <p class="mb-4">Artificial Intelligence is undergoing a seismic shift from simple conversational interfaces to <strong>Large Action Models (LAMs)</strong>. While traditional models like GPT-4 excel at generating text, LAMs are designed to understand human intent and translate it into complex actions within digital environments.</p>
+                    <p class="mb-4">Imagine asking your computer to "book a flight to Seattle next Tuesday and add it to my work calendar." Instead of just telling you how to do it, a LAM navigates the travel site, selects the best options, completes the checkout, and updates your calendar—all autonomously.</p>
+                    <p class="mb-4">For students, this means the nature of technical learning is changing. We are moving from learning how to operate tools to learning how to orchestrate systems of agents. Advanta Stream will continue to track this transition as it reaches consumer devices in 2026.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1000&h=600&fit=crop",
+                sourceName: "OpenAI Research & TechCrunch",
+                sourceUrl: "https://techcrunch.com/tag/artificial-intelligence/"
+            },
+            {
+                id: 2,
+                category: "Security",
+                title: "Post-Quantum Cryptography Migration Begins",
+                excerpt: "Major tech infrastructure is officially moving to quantum-resistant algorithms to safeguard data against future computing threats.",
+                content: `
+                    <p class="mb-4">The global cybersecurity landscape is currently facing "Q-Day"—the hypothetical moment when a quantum computer becomes powerful enough to break modern encryption standards like RSA and AES.</p>
+                    <p class="mb-4">To combat this, the National Institute of Standards and Technology (NIST) has finalized the first set of post-quantum cryptographic standards. Tech giants are now in a race to migrate their global infrastructures. This migration involves replacing current mathematical keys with lattice-based cryptography, which is resistant to both classical and quantum attacks.</p>
+                    <p class="mb-4">For Advanta students interested in security, understanding these new algorithms is no longer optional—it is the baseline for modern cybersecurity engineering.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1000&h=600&fit=crop",
+                sourceName: "NIST Security Standards",
+                sourceUrl: "https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-final-post-quantum-cryptography-standards"
+            },
+            {
+                id: 3,
+                category: "Hardware",
+                title: "Graphene Chipsets: 10x Speed for Mobile",
+                excerpt: "Prototype mobile processors utilizing graphene structures are demonstrating unprecedented thermal efficiency and clock speeds.",
+                content: `
+                    <p class="mb-4">Silicon has served the tech industry well for over 50 years, but we are reaching the physical limits of how small silicon transistors can get. Enter <strong>Graphene</strong>.</p>
+                    <p class="mb-4">Graphene, a single layer of carbon atoms arranged in a honeycomb lattice, is 100 times stronger than steel and conducts electricity significantly better than copper. Recent lab results have shown mobile processors hitting clock speeds of 20GHz while remaining cooler than current 3GHz silicon chips.</p>
+                    <p class="mb-4">The challenge remains mass production. However, as of January 2026, several manufacturers have reported breakthroughs in CVD (Chemical Vapor Deposition) that could see the first graphene-integrated mobile devices by late next year.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1000&h=600&fit=crop",
+                sourceName: "Nature Nanotechnology Journal",
+                sourceUrl: "https://www.nature.com/nnano/"
+            },
+            {
+                id: 4,
+                category: "Software Engineering",
+                title: "TypeScript 6.0 Proposal: Enhanced Inference",
+                excerpt: "The newest community spec aims to solve long-standing complex generic inference issues, making codebases even safer.",
+                content: `
+                    <p class="mb-4">TypeScript 6.0 is focusing on "Hyper-Inference"—a new engine capability that reduces the need for explicit type annotations even in highly complex generic architectures.</p>
+                    <p class="mb-4">Key features include 'Auto-Nesting Type Guards' and 'Recursive Type Unwrapping,' which developers have requested for years. This update significantly improves the developer experience by catching "impossible" bugs at compile-time that previously required manual unit testing.</p>
+                    <p class="mb-4">Advanta's Web Development courses will be updated shortly after the official 6.0 release to ensure our students are using the safest, most modern patterns available.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1000&h=600&fit=crop",
+                sourceName: "Microsoft TypeScript Blog",
+                sourceUrl: "https://devblogs.microsoft.com/typescript/"
+            }
+        ];
+
+        function renderStream() {
+            const grid = document.getElementById('newsGrid');
+            setTimeout(() => {
+                grid.innerHTML = streamData.map(item => `
+                    <article class="news-card" onclick="openReport(${item.id})">
+                        <img src="${item.image}" alt="${item.title}" class="news-image">
+                        <div class="news-content">
+                            <div class="news-category">${item.category}</div>
+                            <h2 class="news-title">${item.title}</h2>
+                            <p class="news-excerpt">${item.excerpt}</p>
+                            <div class="news-footer">
+                                <span>Read Full Report</span>
+                                <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </div>
+                        </div>
+                    </article>
+                `).join('');
+            }, 800);
+        }
+
+        function openReport(id) {
+            const report = streamData.find(r => r.id === id);
+            if (!report) return;
+
+            const modal = document.getElementById('reportModal');
+            const inner = document.getElementById('modalInner');
+
+            inner.innerHTML = `
+                <img src="${report.image}" class="report-full-image" alt="Report Image">
+                <div class="modal-body">
+                    <div class="news-category" style="margin-bottom: 0.5rem;">${report.category}</div>
+                    <h2 class="text-3xl font-bold mb-6">${report.title}</h2>
+                    <div style="color: hsl(var(--foreground)); font-size: 1.1rem; line-height: 1.8;">
+                        ${report.content}
+                    </div>
+                    
+                    <!-- NEW: VERIFIED SOURCE SECTION -->
+                    <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid hsl(var(--border));">
+                        <p style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">
+                            Verified Source
+                        </p>
+                        <a href="${report.sourceUrl}" target="_blank" rel="noopener noreferrer" 
+                           style="color: hsl(var(--primary)); text-decoration: none; font-size: 1rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; transition: var(--transition-smooth);"
+                           onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                            ${report.sourceName}
+                            <svg class="icon" style="width: 1rem; height: 1rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <button onclick="closeReportModal(event, true)" class="btn btn-primary" style="margin-top: 2.5rem; width: 100%;">Finish Reading</button>
+                </div>
+            `;
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling background
+        }
+
+        function closeReportModal(e, force = false) {
+            if (force || e.target.id === 'reportModal') {
+                document.getElementById('reportModal').style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Standard ADVANTA Theme Logic
+        function updateAuthButtons() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const authButton = document.getElementById('authButton');
+            const mobileAuthButton = document.getElementById('mobileAuthButton');
+            
+            if (isLoggedIn && authButton) {
+                const userName = localStorage.getItem('userName') || localStorage.getItem('userEmail') || 'User';
+                const firstName = userName.split(' ')[0];
+                
+                authButton.textContent = firstName;
+                authButton.onclick = () => window.location.href = 'account.html';
+                
+                if (mobileAuthButton) {
+                    mobileAuthButton.textContent = firstName;
+                    mobileAuthButton.onclick = () => window.location.href = 'account.html';
+                }
+            }
+        }
+
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            let isDark = localStorage.getItem('theme') !== 'light';
+            
+            function applyTheme() {
+                if (isDark) {
+                    document.body.classList.remove('light-theme');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                } else {
+                    document.body.classList.add('light-theme');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                }
+            }
+            applyTheme();
+            themeToggle.addEventListener('click', () => {
+                isDark = !isDark;
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                applyTheme();
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupThemeToggle();
+            setupMobileMenu();
+            updateAuthButtons();
+            renderStream();
+        });
+
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            const closeIcon = document.getElementById('closeIcon');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('active');
+                    const isActive = mobileMenu.classList.contains('active');
+                    menuIcon.style.display = isActive ? 'none' : 'block';
+                    closeIcon.style.display = isActive ? 'block' : 'none';
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADVANTA | About</title>
+    <link rel="stylesheet" href="Homepage.css">
+</head>
+<body>
+    <!--
+    <h1>Log In</h1>
+    <button onclick="window.location.href='index.html'" class="nav-link">Go Home</button>
+    -->
+    <header class="navigation">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="nav-logo">
+                <span>A</span>DVANTA
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="nav-links">
+                <!-- <a href="#topics" class="nav-link">Resources</a> -->
+                <a href="courses.html" class="nav-link">Courses</a>
+                <a href="user_progress.html" class="nav-link">My Progress</a>
+                <a href="tutors_page.html" class="nav-link">Tutors</a>
+                <a href="about.html" class="nav-link">About</a>
+                <!-- <a href="#contact" class="nav-link">Contact</a> --> 
+            </nav>
+
+            <!-- Desktop Actions -->
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <!-- Sun icon (for dark mode) -->
+                    <svg class="icon icon-sm" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <!-- Moon icon (for light mode) - hidden by default -->
+                    <svg class="icon icon-sm" id="moonIcon" style="display: none;" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button onclick="window.location.href='login.html'" class="btn btn-ghost" id="authButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream">Advanta Stream</button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <svg class="icon" id="menuIcon" viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="icon" id="closeIcon" style="display: none;" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="courses.html" class="nav-link">Courses</a>
+            <a href="user_progress.html" class="nav-link">My Progress</a>
+            <a href="tutors_page.html" class="nav-link">Tutors</a>
+            <a href="about.html" class="nav-link">About</a>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button class="btn btn-ghost" style="flex: 1;" id="mobileAuthButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream" style="flex: 1;">Advanta Stream</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="about-section" id="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-content">
+                        <p class="section-label">About Advanta</p>
+                        <h2 class="section-title">Creating Your Tech Advantage</h2>
+                        <p>
+                            Advanta is more than just a learning platform—it's about creating a <strong>tech advantage</strong> for students. 
+                            We believe in boosting learning through <strong>positivity and encouragement</strong>, empowering every student 
+                            to reach their full potential in technology.
+                        </p>
+                        <p>
+                            Our mission is to make quality technology education accessible while fostering an environment where 
+                            students feel supported, motivated, and confident. Whether you're taking your first steps in coding 
+                            or advancing your career, Advanta provides the tools, guidance, and community to help you succeed.
+                        </p>
+                    </div>
+
+                    <div class="values-grid">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <circle cx="12" cy="12" r="6"></circle>
+                                    <circle cx="12" cy="12" r="2"></circle>
+                                </svg>
+                            </div>
+                            <h3 class="value-title">Positivity</h3>
+                            <p class="value-description">Learning through encouragement and support</p>
+                        </div>
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                            <h3 class="value-title">Empowerment</h3>
+                            <p class="value-description">Building confidence through skill mastery</p>
+                        </div>
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <line x1="9" y1="18" x2="15" y2="18"></line>
+                                    <line x1="10" y1="22" x2="14" y2="22"></line>
+                                    <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+                                </svg>
+                            </div>
+                            <h3 class="value-title">Innovation</h3>
+                            <p class="value-description">Staying ahead with cutting-edge technology</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Founders Section -->
+        <section style="padding: 6rem 0; background: hsl(var(--card));">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 4rem;">
+                    <p class="section-label">Meet The Team</p>
+                    <h2 class="section-title">Our Founders</h2>
+                    <p class="section-description">
+                        The passionate team behind Advanta's vision
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; max-width: 1000px; margin: 0 auto;">
+                    <!-- Founder 1: Roma -->
+                    <div style="background: hsl(var(--background)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 2rem; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 24px hsl(var(--primary) / 0.15)'; this.style.borderColor='hsl(var(--primary) / 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none'; this.style.borderColor='hsl(var(--border)'">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem; border: 3px solid hsl(var(--primary) / 0.3);">
+                            <img src="Roma.jpeg" alt="Roma" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: hsl(var(--foreground));">Roma</h3>
+                        <p style="color: hsl(var(--primary)); font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; font-size: 0.875rem; letter-spacing: 0.05em;">Developer</p>
+                        <p style="color: hsl(var(--muted-foreground)); line-height: 1.6;">Building the technical foundation that powers Advanta's innovative learning platform.</p>
+                    </div>
+
+                    <!-- Founder 2: Ishita -->
+                    <div style="background: hsl(var(--background)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 2rem; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 24px hsl(var(--accent) / 0.15)'; this.style.borderColor='hsl(var(--accent) / 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none'; this.style.borderColor='hsl(var(--border)'">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem; border: 3px solid hsl(var(--accent) / 0.3);">
+                            <img src="Ishita.jpeg" alt="Ishita" style="width: 100%; height: 100%; object-fit: cover; object-position: center 0%; transform: scale(1.15);">
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: hsl(var(--foreground));">Ishita</h3>
+                        <p style="color: hsl(var(--accent)); font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; font-size: 0.875rem; letter-spacing: 0.05em;">Developer</p>
+                        <p style="color: hsl(var(--muted-foreground)); line-height: 1.6;">Crafting seamless user experiences and developing features that make learning effortless.</p>
+                    </div>
+
+                    <!-- Founder 3: Riddhi -->
+                    <div style="background: hsl(var(--background)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 2rem; text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 24px hsl(var(--primary) / 0.15)'; this.style.borderColor='hsl(var(--primary) / 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none'; this.style.borderColor='hsl(var(--border)'">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem; border: 3px solid hsl(var(--primary) / 0.3);">
+                            <img src="Riddhi.jpeg" alt="Riddhi" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: hsl(var(--foreground));">Riddhi</h3>
+                        <p style="color: hsl(var(--primary)); font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; font-size: 0.875rem; letter-spacing: 0.05em;">Designer</p>
+                        <p style="color: hsl(var(--muted-foreground)); line-height: 1.6;">Designing beautiful, intuitive interfaces that inspire and engage learners every day.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy</a>
+                    <a href="#" class="footer-link">Terms</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+                <div class="footer-social">
+                    <a href="mailto:hello@advanta.com" class="social-link" aria-label="Email">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Chat">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /**
+         * Theme toggle functionality
+         * React equivalent: ThemeProvider with useTheme hook
+         */
+        function updateAuthButtons() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const authButton = document.getElementById('authButton');
+            const mobileAuthButton = document.getElementById('mobileAuthButton');
+            
+            if (isLoggedIn && authButton) {
+                const userName = localStorage.getItem('userName') || localStorage.getItem('userEmail') || 'User';
+                const firstName = userName.split(' ')[0];
+                
+                authButton.textContent = firstName;
+                authButton.onclick = () => window.location.href = 'account.html';
+                
+                if (mobileAuthButton) {
+                    mobileAuthButton.textContent = firstName;
+                    mobileAuthButton.onclick = () => window.location.href = 'account.html';
+                }
+            }
+        }
+
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            // Check for saved theme preference
+            // React equivalent: localStorage.getItem in ThemeProvider
+            let isDark = localStorage.getItem('theme') !== 'light';
+            
+            function applyTheme() {
+                if (isDark) {
+                    document.body.classList.remove('light-theme');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                } else {
+                    document.body.classList.add('light-theme');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                }
+            }
+            
+            applyTheme();
+
+            themeToggle.addEventListener('click', () => {
+                isDark = !isDark;
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                applyTheme();
+            });
+        }
+
+        /**
+         * Smooth scroll for anchor links
+         * React equivalent: onClick with scrollIntoView
+         */
+        function setupSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(anchor.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        /**
+         * Toggle mobile menu
+         * React equivalent: onClick={() => setIsMenuOpen(!isMenuOpen)}
+         */
+        function setupMobileMenu() {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            
+            // This is equivalent to React's useState for isMenuOpen
+            let isMenuOpen = false;
+
+            menuBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                
+                // Toggle menu visibility
+                // React would do: className={isMenuOpen ? 'mobile-menu active' : 'mobile-menu'}
+                mobileMenu.classList.toggle('active', isMenuOpen);
+                
+                // Toggle icons
+                menuIcon.style.display = isMenuOpen ? 'none' : 'block';
+                closeIcon.style.display = isMenuOpen ? 'block' : 'none';
+            });
+
+            // Close menu when clicking a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    isMenuOpen = false;
+                    mobileMenu.classList.remove('active');
+                    menuIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                });
+            });
+        }
+
+        // ===========================================
+        // INITIALIZATION
+        // Equivalent to React's useEffect with [] dependency
+        // ===========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup event handlers
+            setupMobileMenu();
+            setupThemeToggle();
+            setupSmoothScroll();
+            
+            console.log('Advanta About page loaded!');
+        });
+
+    </script>
+</body>
+</html>
