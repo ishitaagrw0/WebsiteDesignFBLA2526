@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutors</title>
+    <link rel="stylesheet" href="Homepage.css">
+
+</head>
+<body>
+    <!--
+    <h1>Log In</h1>
+    <button onclick="window.location.href='index.html'" class="nav-link">Go Home</button>
+    -->
+    <header class="navigation">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="nav-logo">
+                <span>A</span>DVANTA
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="nav-links">
+                <!-- <a href="#topics" class="nav-link">Resources</a> -->
+                <a href="courses.html" class="nav-link">Courses</a>
+                <a href="user_progress.html" class="nav-link">My Progress</a>
+                <a href="tutors_page.html" class="nav-link">Tutors</a>
+                <a href="about.html" class="nav-link">About</a>
+                <!-- <a href="#contact" class="nav-link">Contact</a> --> 
+            </nav>
+
+            <!-- Desktop Actions -->
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <!-- Sun icon (for dark mode) -->
+                    <svg class="icon icon-sm" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <!-- Moon icon (for light mode) - hidden by default -->
+                    <svg class="icon icon-sm" id="moonIcon" style="display: none;" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button onclick="window.location.href='login.html'" class="btn btn-ghost" id="authButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream">Advanta Stream</button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <svg class="icon" id="menuIcon" viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="icon" id="closeIcon" style="display: none;" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="courses.html" class="nav-link">Courses</a>
+            <a href="user_progress.html" class="nav-link">My Progress</a>
+            <a href="tutors_page.html" class="nav-link">Tutors</a>
+            <a href="about.html" class="nav-link">About</a>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button class="btn btn-ghost" style="flex: 1;" id="mobileAuthButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream" style="flex: 1;">Advanta Stream</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tutors Header -->
+    <section style="background: linear-gradient(180deg, hsl(var(--primary) / 0.2) 0%, hsl(var(--accent) / 0.12) 35%, hsl(var(--background)) 85%); padding: 4.5rem 1.5rem 3rem; text-align: center;">
+        <div class="container" style="max-width: 900px;">
+            <div style="display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1.25rem; border-radius: 999px; background: hsl(var(--card) / 0.7); border: 1px solid hsl(var(--primary) / 0.35); color: hsl(var(--primary)); font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; font-size: 0.7rem;">
+                Live Tutor Network
+            </div>
+            <h1 style="margin-top: 1.25rem; font-size: 3.5rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                Tutors
+            </h1>
+            <p style="margin-top: 1rem; font-size: 1.1rem; color: hsl(var(--muted-foreground));">
+                Meet the experts ready to help you learn, build, and level up.
+            </p>
+        </div>
+    </section>
+
+    <!-- Tutors Carousel Section -->
+    <section style="padding: 1rem 1.5rem 4rem; text-align: center; background: hsl(var(--background));">
+        <div class="container">
+
+    <!-- Tutor Modal -->
+    <div id="tutorModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 3000; align-items: center; justify-content: center;">
+        <div style="background: hsl(var(--background)); border-radius: 1rem; padding: 2rem; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+            <button onclick="closeTutorModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: hsl(var(--foreground));">✕</button>
+            
+            <div id="tutorModalContent" style="text-align: center; padding-top: 1rem;">
+                <!-- Content filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+            <div style="max-width: 1800px; margin: 0 auto; overflow: hidden; position: relative; padding: 2rem 0;">
+                <h2 class="text-4xl md-text-5xl" style="font-weight: 700; letter-spacing: 0.05em; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 2rem;">
+                    SOME OF OUR TUTORS!
+                </h2>
+                <!-- Carousel Container -->
+                <div id="tutorCarousel" style="display: flex; justify-content: center; align-items: center; transition: opacity 0.3s ease, transform 0.3s ease;">
+                    <!-- Tutor cards will be inserted here by JavaScript -->
+                </div>
+
+                <!-- Navigation Buttons -->
+                <button onclick="scrollTutorCarousel(-1)" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: hsl(var(--primary)); color: white; border: none; padding: 1.5rem 2rem; border-radius: 50%; cursor: pointer; font-size: 3rem; z-index: 10; display: flex; align-items: center; justify-content: center; width: 5rem; height: 5rem; transition: all 0.3s ease;"
+                    onmouseover="this.style.background='hsl(var(--accent))'" onmouseout="this.style.background='hsl(var(--primary))'">
+                    ❮
+                </button>
+                <button onclick="scrollTutorCarousel(1)" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: hsl(var(--primary)); color: white; border: none; padding: 1.5rem 2rem; border-radius: 50%; cursor: pointer; font-size: 3rem; z-index: 10; display: flex; align-items: center; justify-content: center; width: 5rem; height: 5rem; transition: all 0.3s ease;"
+                    onmouseover="this.style.background='hsl(var(--accent))'" onmouseout="this.style.background='hsl(var(--primary))'">
+                    ❯
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Tutors Map Section -->
+    <section style="padding: 4rem 1.5rem; background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--primary) / 0.1) 100%);">
+        <div class="container">
+            <div style="max-width: 1400px; margin: 0 auto;">
+                <!-- Section Header -->
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <h2 class="text-4xl md-text-5xl" style="font-weight: 700; letter-spacing: 0.05em; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem;">
+                        TUTORS FROM AROUND THE GLOBE
+                    </h2>
+                    <p style="color: hsl(var(--muted-foreground)); font-size: 1.125rem; max-width: 600px; margin: 0 auto;">
+                        Our diverse team of expert tutors spans across the United States, bringing unique perspectives and expertise to help you learn and grow.
+                    </p>
+                </div>
+
+                <!-- Globe Container -->
+                <div style="display: flex; gap: 3rem; align-items: center; flex-wrap: wrap; justify-content: center;">
+                    <!-- Map Section -->
+                    <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; align-items: center;">
+                        <div style="position: relative; width: 100%; max-width: 550px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.05)); border: 2px solid rgba(59, 130, 246, 0.3); border-radius: 1rem; padding: 1.5rem; overflow: hidden; display: flex; justify-content: center;">
+                            <img src="image.png" alt="Global tutor locations" usemap="#tutorMap" width="768" height="768" style="width: min(480px, 92%); height: auto; display: block; border-radius: 50%; box-shadow: 0 18px 40px rgba(0,0,0,0.35); background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), rgba(0,0,0,0) 60%);" />
+                            <map name="tutorMap">
+                                <area shape="circle" coords="120,280,22" href="javascript:void(0)" alt="California" onclick="openLocationModal('California')">
+                                <area shape="circle" coords="90,180,20" href="javascript:void(0)" alt="Washington" onclick="openLocationModal('Washington')">
+                                <area shape="circle" coords="280,260,20" href="javascript:void(0)" alt="Colorado" onclick="openLocationModal('Colorado')">
+                                <area shape="circle" coords="360,380,22" href="javascript:void(0)" alt="Texas" onclick="openLocationModal('Texas')">
+                                <area shape="circle" coords="480,260,18" href="javascript:void(0)" alt="Illinois" onclick="openLocationModal('Illinois')">
+                                <area shape="circle" coords="600,220,18" href="javascript:void(0)" alt="Pennsylvania" onclick="openLocationModal('Pennsylvania')">
+                                <area shape="circle" coords="620,420,20" href="javascript:void(0)" alt="Florida" onclick="openLocationModal('Florida')">
+                                <area shape="circle" coords="650,180,18" href="javascript:void(0)" alt="New York" onclick="openLocationModal('New York')">
+                            </map>
+                        </div>
+                        <!-- Location Legend -->
+                        <div id="locationLegend" style="margin-top: 2rem; width: 100%; max-width: 550px; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;"></div>
+                    </div>
+
+                    <!-- Info Section -->
+                    <div style="flex: 1; min-width: 300px;">
+                        <div style="background: linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--accent) / 0.15)); border: 2px solid hsl(var(--primary) / 0.3); border-radius: 1rem; padding: 2rem; text-align: center;">
+                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: hsl(var(--foreground));">
+                                Connect with Global Experts
+                            </h3>
+                            <p style="font-size: 1rem; color: hsl(var(--muted-foreground)); line-height: 1.6; margin-bottom: 1rem;">
+                                Click on any location on our globe to explore our amazing tutors from that region. Whether you're seeking help with web development, data science, cybersecurity, or any other field, we have dedicated professionals ready to support your learning journey.
+                            </p>
+                            <p style="font-size: 1rem; color: hsl(var(--muted-foreground)); line-height: 1.6; margin-bottom: 1.25rem;">
+                                Each marker shows how many tutors are based in that state. Hover to highlight a location, then click to view tutor profiles and specialties in that region.
+                            </p>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0 2rem;">
+                                <div style="background: hsl(var(--muted) / 0.45); padding: 1rem; border-radius: 0.75rem; border: 1px solid hsl(var(--primary) / 0.25);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">8+</div>
+                                    <div style="font-size: 0.85rem; color: hsl(var(--muted-foreground));">Tutors listed</div>
+                                </div>
+                                <div style="background: hsl(var(--muted) / 0.45); padding: 1rem; border-radius: 0.75rem; border: 1px solid hsl(var(--primary) / 0.25);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">5</div>
+                                    <div style="font-size: 0.85rem; color: hsl(var(--muted-foreground));">Specialty areas</div>
+                                </div>
+                                <div style="background: hsl(var(--muted) / 0.45); padding: 1rem; border-radius: 0.75rem; border: 1px solid hsl(var(--primary) / 0.25);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">4</div>
+                                    <div style="font-size: 0.85rem; color: hsl(var(--muted-foreground));">US time zones</div>
+                                </div>
+                            </div>
+                            <p style="font-size: 1rem; color: hsl(var(--muted-foreground)); line-height: 1.6; margin-bottom: 2rem;">
+                                Our tutors work across multiple time zones to ensure you can find the perfect match for your schedule and learning needs.
+                            </p>
+                            <button id="globalConnectBtn" style="width: 100%; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); color: white; border: none; padding: 1.2rem 2rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer; font-size: 1.1rem; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 8px 24px hsl(var(--primary) / 0.3);"
+                                onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 12px 32px hsl(var(--primary) / 0.5)'" 
+                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 24px hsl(var(--primary) / 0.3)'">
+                                CONNECT WITH THEM
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tutor Match Timeline -->
+                <div style="margin-top: 3.5rem; background: hsl(var(--card) / 0.65); border: 1px solid hsl(var(--primary) / 0.25); border-radius: 1rem; padding: 2rem;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <h3 style="font-size: 1.75rem; font-weight: 700; letter-spacing: 0.03em; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            Tutor Match Timeline
+                        </h3>
+                        <p style="color: hsl(var(--muted-foreground)); font-size: 1rem; margin-top: 0.75rem;">
+                            See who’s available right now across time zones. Click a card to view tutor details.
+                        </p>
+                    </div>
+                    <div class="timeline" id="timeline"></div>
+                    <div style="display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; color: hsl(var(--muted-foreground)); font-size: 0.875rem;">
+                        <span>Legend: 🟢 Available now • 🟡 Limited hours • ⚪️ Offline</span>
+                        <span id="timelineUpdated">Updated just now</span>
+                    </div>
+                </div>
+
+                <!-- Location Popup Modal -->
+                <div id="locationModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000; align-items: center; justify-content: center;">
+                    <div style="background: hsl(var(--background)); border-radius: 1rem; padding: 2.5rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+                        <button onclick="closeLocationModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: hsl(var(--foreground));">✕</button>
+                        <div id="locationModalContent" style="padding-top: 0.5rem;">
+                            <!-- Content filled by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Tutor data
+        const tutorsData = [
+            { name: "Yutika Dayani", image: "yutika.jpg", subject: "Web Development", specialty: "React & JavaScript", location: "California", timezone: "PST", description: "Passionate about teaching modern web development with hands-on projects." },
+            { name: "Ariana Pirvu", image: "ariana.jpg", subject: "Computer Science", specialty: "Algorithms", location: "Texas", timezone: "CST", description: "Specializes in algorithmic problem-solving and data structures." },
+            { name: "Nachiket Ladhani", image: "nachiket.jpg", subject: "Software Development", specialty: "CSS & Design", location: "Florida", timezone: "EST", description: "Creative designer focused on beautiful and responsive web interfaces." },
+            { name: "Catarina Pirvu", image: "catarina.jpg", subject: "Backend", specialty: "Node.js & Databases", location: "Pennsylvania", timezone: "EST", description: "Backend specialist with expertise in scalable server architecture." },
+            { name: "Liam Napier", image: "liam.jpg", subject: "Circuits", specialty: "Analytics", location: "Colorado", timezone: "MST", description: "Electronics and circuits enthusiast with years of hardware experience." },
+            { name: "Kenta Leung", image: "kenta.jpg", subject: "Cybersecurity", specialty: "Network Security", location: "Illinois", timezone: "CST", description: "Security expert dedicated to protecting digital assets and systems." },
+        ];
+
+        let tutorCurrentIndex = 0;
+        let tutorAnimating = false;
+
+        function createTutorCard(tutor, isCenter) {
+            const opacity = isCenter ? 1 : 0.5;
+            const scale = isCenter ? 1 : 0.85;
+            return `
+                <div class="tutor-card" style="
+                    flex: 0 0 auto;
+                    height: 440px;
+                    background: linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--accent) / 0.15));
+                    border: 2px solid hsl(var(--primary) / ${isCenter ? '0.8' : '0.3'});
+                    border-radius: 0.75rem;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 3rem 2rem;
+                    position: relative;
+                    opacity: ${opacity};
+                    transform: scale(${scale});
+                    transition: all 0.4s ease;
+                    box-shadow: ${isCenter ? '0 12px 32px hsl(var(--primary) / 0.3)' : '0 4px 12px hsl(var(--primary) / 0.1)'};
+                    cursor: ${isCenter ? 'pointer' : 'default'};
+                " onclick="${isCenter ? `openTutorModal('${tutor.name}')` : ''}">
+                    <img src="${tutor.image}" alt="${tutor.name}" style="width: 140px; height: 140px; border-radius: 0.5rem; margin-bottom: 2rem; object-fit: cover; border: 2px solid hsl(var(--primary) / 0.3);">
+                    <h3 style="font-size: 2rem; font-weight: 600; margin-bottom: 0.75rem; color: hsl(var(--foreground)); line-height: 1.2;">
+                        ${tutor.name}
+                    </h3>
+                    <p style="font-size: 1.5rem; color: hsl(var(--primary)); font-weight: 500; margin-bottom: 1rem;">
+                        ${tutor.subject}
+                    </p>
+                    <p style="font-size: 1.4rem; color: hsl(var(--muted-foreground)); line-height: 1.3;">
+                        ${tutor.specialty}
+                    </p>
+                </div>
+            `;
+        }
+
+        function renderTutorCarousel() {
+            const carousel = document.getElementById('tutorCarousel');
+            let html = '';
+
+            // Show cards based on screen size
+            let numCards = window.innerWidth < 768 ? 1 : 3;
+            let start = -Math.floor((numCards - 1) / 2);
+            let end = Math.floor((numCards - 1) / 2);
+
+            for (let i = start; i <= end; i++) {
+                const index = (tutorCurrentIndex + i + tutorsData.length) % tutorsData.length;
+                const isCenter = i === 0;
+                html += createTutorCard(tutorsData[index], isCenter);
+            }
+
+            carousel.innerHTML = html;
+        }
+
+        function scrollTutorCarousel(direction) {
+            if (tutorAnimating) return;
+            
+            tutorAnimating = true;
+            const carousel = document.getElementById('tutorCarousel');
+            
+            // Compress to center
+            carousel.style.transition = 'transform 0.3s ease';
+            carousel.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                tutorCurrentIndex = (tutorCurrentIndex + direction + tutorsData.length) % tutorsData.length;
+                renderTutorCarousel();
+                
+                // Expand back out
+                setTimeout(() => {
+                    carousel.style.transition = 'transform 0.3s ease';
+                    carousel.style.transform = 'scale(1)';
+                    
+                    setTimeout(() => {
+                        tutorAnimating = false;
+                    }, 300);
+                }, 10);
+            }, 300);
+        }
+
+        // Initialize tutor carousel
+        renderTutorCarousel();
+
+        // Start automatic scrolling every 5 seconds
+        setInterval(() => {
+            scrollTutorCarousel(1);
+        }, 5000);
+
+        // Update on resize
+        window.addEventListener('resize', renderTutorCarousel);
+
+        function openTutorModal(tutorName) {
+            const tutor = tutorsData.find(t => t.name === tutorName);
+            if (!tutor) return;
+            
+            const modal = document.getElementById('tutorModal');
+            const content = document.getElementById('tutorModalContent');
+            
+            content.innerHTML = `
+                <img src="${tutor.image}" alt="${tutor.name}" style="width: 80px; height: 80px; border-radius: 0.75rem; margin: 0 auto 1.5rem; object-fit: cover; border: 2px solid hsl(var(--primary) / 0.3);">
+                <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; color: hsl(var(--foreground));">
+                    ${tutor.name}
+                </h2>
+                <p style="font-size: 1rem; color: hsl(var(--primary)); font-weight: 600; margin-bottom: 1.5rem;">
+                    ${tutor.subject}
+                </p>
+                
+                <div style="text-align: left; background: hsl(var(--muted) / 0.5); padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 1.5rem; gap: 1rem; display: flex; flex-direction: column;">
+                    <div>
+                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.25rem; font-weight: 600;">Specialty</p>
+                        <p style="font-size: 1rem; color: hsl(var(--foreground));">${tutor.specialty}</p>
+                    </div>
+                    <div>
+                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.25rem; font-weight: 600;">Location</p>
+                        <p style="font-size: 1rem; color: hsl(var(--foreground));">${tutor.location}</p>
+                    </div>
+                    <div>
+                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.25rem; font-weight: 600;">Timezone</p>
+                        <p style="font-size: 1rem; color: hsl(var(--foreground));">${tutor.timezone}</p>
+                    </div>
+                </div>
+                
+                <p style="font-size: 0.95rem; color: hsl(var(--foreground)); line-height: 1.6; margin-bottom: 1.5rem;">
+                    ${tutor.description}
+                </p>
+                
+                <button style="width: 100%; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); color: white; border: none; padding: 0.875rem 1.5rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: transform 0.2s ease; font-size: 1rem;"
+                    onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    Connect with them
+                </button>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeTutorModal() {
+            document.getElementById('tutorModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('tutorModal').addEventListener('click', (e) => {
+            if (e.target.id === 'tutorModal') {
+                closeTutorModal();
+            }
+        });
+
+        /**
+         * Theme toggle functionality
+         * React equivalent: ThemeProvider with useTheme hook
+         */
+        function updateAuthButtons() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const authButton = document.getElementById('authButton');
+            const mobileAuthButton = document.getElementById('mobileAuthButton');
+            
+            if (isLoggedIn && authButton) {
+                const userName = localStorage.getItem('userName') || localStorage.getItem('userEmail') || 'User';
+                const firstName = userName.split(' ')[0];
+                
+                authButton.textContent = firstName;
+                authButton.onclick = () => window.location.href = 'account.html';
+                
+                if (mobileAuthButton) {
+                    mobileAuthButton.textContent = firstName;
+                    mobileAuthButton.onclick = () => window.location.href = 'account.html';
+                }
+            }
+        }
+
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            // Check for saved theme preference
+            // React equivalent: localStorage.getItem in ThemeProvider
+            let isDark = localStorage.getItem('theme') !== 'light';
+            
+            function applyTheme() {
+                if (isDark) {
+                    document.body.classList.remove('light-theme');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                } else {
+                    document.body.classList.add('light-theme');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                }
+            }
+            
+            applyTheme();
+
+            themeToggle.addEventListener('click', () => {
+                isDark = !isDark;
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                applyTheme();
+            });
+        }
+
+        /**
+         * Smooth scroll for anchor links
+         * React equivalent: onClick with scrollIntoView
+         */
+        function setupSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(anchor.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        // ===========================================
+        // INTERACTIVE USA MAP FUNCTIONALITY
+        // ===========================================
+
+        // Location coordinates (SVG map coordinates - normalized to 960x600 viewBox)
+        const locationCoordinates = {
+            "California": { x: 120, y: 280, label: "California" },
+            "Washington": { x: 90, y: 180, label: "Washington" },
+            "Colorado": { x: 280, y: 260, label: "Colorado" },
+            "Texas": { x: 360, y: 380, label: "Texas" },
+            "Illinois": { x: 480, y: 260, label: "Illinois" },
+            "Pennsylvania": { x: 600, y: 220, label: "Pennsylvania" },
+            "Florida": { x: 620, y: 420, label: "Florida" },
+            "New York": { x: 650, y: 180, label: "New York" }
+        };
+
+        function drawMap() {
+            const svg = document.getElementById('mapSvg');
+            if (!svg) return;
+
+            const markersGroup = svg.querySelector('#mapMarkers');
+            const linesGroup = svg.querySelector('#connectionLines');
+            
+            if (!markersGroup || !linesGroup) return;
+
+            // Clear existing content
+            while (markersGroup.firstChild) markersGroup.removeChild(markersGroup.firstChild);
+            while (linesGroup.firstChild) linesGroup.removeChild(linesGroup.firstChild);
+
+            // Draw connection lines between nearby locations
+            const locations = Object.entries(locationCoordinates);
+            for (let i = 0; i < locations.length; i++) {
+                for (let j = i + 1; j < locations.length; j++) {
+                    const [loc1, coords1] = locations[i];
+                    const [loc2, coords2] = locations[j];
+                    
+                    const distance = Math.sqrt(Math.pow(coords2.x - coords1.x, 2) + Math.pow(coords2.y - coords1.y, 2));
+                    
+                    // Draw lines between nearby locations
+                    if (distance < 300) {
+                        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        line.setAttribute('x1', coords1.x);
+                        line.setAttribute('y1', coords1.y);
+                        line.setAttribute('x2', coords2.x);
+                        line.setAttribute('y2', coords2.y);
+                        line.setAttribute('class', 'map-line');
+                        linesGroup.appendChild(line);
+                    }
+                }
+            }
+
+            // Draw location markers
+            Object.entries(locationCoordinates).forEach(([location, coords]) => {
+                const tutorCount = tutorsData.filter(t => t.location === location).length;
+                
+                // Outer pulsing ring
+                const outerRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                outerRing.setAttribute('cx', coords.x);
+                outerRing.setAttribute('cy', coords.y);
+                outerRing.setAttribute('r', '24');
+                outerRing.setAttribute('fill', 'none');
+                outerRing.setAttribute('stroke', 'rgba(59, 130, 246, 0.6)');
+                outerRing.setAttribute('stroke-width', '2');
+                outerRing.setAttribute('class', 'map-pulse');
+                markersGroup.appendChild(outerRing);
+
+                // Main marker (3D gradient)
+                const marker = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                marker.setAttribute('cx', coords.x);
+                marker.setAttribute('cy', coords.y);
+                marker.setAttribute('r', '14');
+                marker.setAttribute('fill', 'url(#markerGradient)');
+                marker.setAttribute('filter', 'url(#markerGlow)');
+                marker.setAttribute('class', 'map-marker');
+                markersGroup.appendChild(marker);
+
+                // Tutor count badge
+                const badge = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                badge.setAttribute('cx', coords.x + 16);
+                badge.setAttribute('cy', coords.y - 16);
+                badge.setAttribute('r', '10');
+                badge.setAttribute('fill', '#FF6B6B');
+                badge.setAttribute('opacity', '0.85');
+                badge.setAttribute('class', 'map-badge');
+                markersGroup.appendChild(badge);
+
+                const badgeText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                badgeText.setAttribute('x', coords.x + 16);
+                badgeText.setAttribute('y', coords.y - 11);
+                badgeText.setAttribute('text-anchor', 'middle');
+                badgeText.setAttribute('fill', 'white');
+                badgeText.setAttribute('font-size', '12');
+                badgeText.setAttribute('font-weight', 'bold');
+                badgeText.textContent = tutorCount;
+                markersGroup.appendChild(badgeText);
+
+                // Location label
+                const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                label.setAttribute('x', coords.x);
+                label.setAttribute('y', coords.y + 32);
+                label.setAttribute('text-anchor', 'middle');
+                label.setAttribute('fill', '#3B82F6');
+                label.setAttribute('font-size', '12');
+                label.setAttribute('font-weight', '600');
+                label.setAttribute('opacity', '0.7');
+                label.setAttribute('class', 'map-label');
+                label.textContent = location;
+                markersGroup.appendChild(label);
+
+                // Interactive group
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.style.cursor = 'pointer';
+                
+                const hitArea = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                hitArea.setAttribute('cx', coords.x);
+                hitArea.setAttribute('cy', coords.y);
+                hitArea.setAttribute('r', '28');
+                hitArea.setAttribute('fill', 'transparent');
+                g.appendChild(hitArea);
+
+                // Hover effects
+                g.addEventListener('mouseover', () => {
+                    marker.setAttribute('r', '18');
+                    outerRing.setAttribute('r', '32');
+                    outerRing.setAttribute('stroke', 'rgba(139, 92, 246, 0.8)');
+                    label.setAttribute('opacity', '1');
+                    badge.setAttribute('opacity', '1');
+                });
+                g.addEventListener('mouseout', () => {
+                    marker.setAttribute('r', '14');
+                    outerRing.setAttribute('r', '24');
+                    outerRing.setAttribute('stroke', 'rgba(59, 130, 246, 0.6)');
+                    label.setAttribute('opacity', '0.7');
+                    badge.setAttribute('opacity', '0.85');
+                });
+                g.addEventListener('click', () => openLocationModal(location));
+
+                markersGroup.appendChild(g);
+            });
+        }
+
+        function initializeMap() {
+            drawMap();
+        }
+
+        function initializeGlobe() {
+            const canvas = document.getElementById('globeCanvas');
+            if (!canvas) return;
+
+            // Draw initial globe
+            drawGlobe();
+
+            // Handle canvas click for location selection
+            canvas.addEventListener('click', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const clickY = e.clientY - rect.top;
+
+                // Check if click is on a marker
+                if (canvas.markerPositions) {
+                    for (let [location, pos] of Object.entries(canvas.markerPositions)) {
+                        const distance = Math.sqrt(Math.pow(clickX - pos.x, 2) + Math.pow(clickY - pos.y, 2));
+                        if (distance < pos.radius) {
+                            openLocationModal(location);
+                            break;
+                        }
+                    }
+                }
+            });
+
+            // Redraw on window resize
+            window.addEventListener('resize', drawGlobe);
+        }
+
+        function openLocationModal(location) {
+            const tutorsInLocation = tutorsData.filter(t => t.location === location);
+            if (tutorsInLocation.length === 0) return;
+
+            const modal = document.getElementById('locationModal');
+            const content = document.getElementById('locationModalContent');
+
+            let tutorsHTML = '';
+            tutorsInLocation.forEach(tutor => {
+                tutorsHTML += `
+                    <div style="background: hsl(var(--muted) / 0.3); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; cursor: pointer; transition: all 0.3s ease;"
+                        onmouseover="this.style.background='hsl(var(--muted) / 0.6)'; this.style.transform='translateX(5px)'" 
+                        onmouseout="this.style.background='hsl(var(--muted) / 0.3)'; this.style.transform='translateX(0)'"
+                        onclick="openTutorModal('${tutor.name}')">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <img src="${tutor.image}" alt="${tutor.name}" style="width: 60px; height: 60px; border-radius: 0.5rem; object-fit: cover;">
+                            <div>
+                                <h4 style="font-size: 1.1rem; font-weight: 600; color: hsl(var(--foreground)); margin-bottom: 0.25rem;">
+                                    ${tutor.name}
+                                </h4>
+                                <p style="font-size: 0.9rem; color: hsl(var(--primary)); font-weight: 500;">
+                                    ${tutor.subject}
+                                </p>
+                                <p style="font-size: 0.85rem; color: hsl(var(--muted-foreground));">
+                                    ${tutor.specialty}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            content.innerHTML = `
+                <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; color: hsl(var(--foreground));">
+                    Tutors in ${location}
+                </h2>
+                <p style="font-size: 0.95rem; color: hsl(var(--muted-foreground)); margin-bottom: 1.5rem;">
+                    ${tutorsInLocation.length} expert${tutorsInLocation.length !== 1 ? 's' : ''} available
+                </p>
+                <div style="border-top: 2px solid hsl(var(--primary) / 0.2); padding-top: 1.5rem;">
+                    ${tutorsHTML}
+                </div>
+                <p style="font-size: 0.85rem; color: hsl(var(--muted-foreground)); margin-top: 1.5rem; text-align: center;">
+                    Click on a tutor to view their full profile
+                </p>
+            `;
+
+            modal.style.display = 'flex';
+        }
+
+        function closeLocationModal() {
+            document.getElementById('locationModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('DOMContentLoaded', () => {
+            const locationModal = document.getElementById('locationModal');
+            if (locationModal) {
+                locationModal.addEventListener('click', (e) => {
+                    if (e.target.id === 'locationModal') {
+                        closeLocationModal();
+                    }
+                });
+            }
+
+            const connectBtn = document.getElementById('globalConnectBtn');
+            if (connectBtn) {
+                connectBtn.addEventListener('click', () => {
+                    alert('Browse the tutors above or click on locations on the globe to connect with tutors near you!');
+                });
+            }
+        });
+
+        /**
+         * Tutor location legend
+         */
+        function renderLocationLegend() {
+            const legend = document.getElementById('locationLegend');
+            const uniqueLocations = [...new Set(tutorsData.map(t => t.location))];
+            
+            let html = '';
+            uniqueLocations.forEach(location => {
+                const count = tutorsData.filter(t => t.location === location).length;
+                html += `
+                    <button style="
+                        background: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--accent) / 0.2));
+                        border: 1px solid hsl(var(--primary) / 0.4);
+                        padding: 0.5rem 1rem;
+                        border-radius: 2rem;
+                        cursor: pointer;
+                        color: hsl(var(--foreground));
+                        font-size: 0.875rem;
+                        font-weight: 500;
+                        transition: all 0.3s ease;
+                    "
+                    onmouseover="this.style.background='linear-gradient(135deg, hsl(var(--primary) / 0.4), hsl(var(--accent) / 0.4))'; this.style.transform='scale(1.1)'"
+                    onmouseout="this.style.background='linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--accent) / 0.2))'; this.style.transform='scale(1)'"
+                    onclick="openLocationModal('${location}')">
+                        📍 ${location} (${count})
+                    </button>
+                `;
+            });
+            
+            legend.innerHTML = html;
+        }
+
+        // ===========================================
+        // TUTOR MATCH TIMELINE
+        // ===========================================
+        const timezoneOffsets = {
+            PST: -8,
+            MST: -7,
+            CST: -6,
+            EST: -5
+        };
+
+        function getTimeInTimezone(offset) {
+            const now = new Date();
+            const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+            const local = new Date(utc + offset * 3600000);
+            return local;
+        }
+
+        function formatHour(date) {
+            const hours = date.getHours();
+            const hour12 = hours % 12 || 12;
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            return `${hour12}${ampm}`;
+        }
+
+        function getAvailabilityStatus(hour) {
+            if (hour >= 9 && hour <= 17) return { label: 'Available now', emoji: '🟢' };
+            if ((hour >= 7 && hour < 9) || (hour > 17 && hour <= 20)) return { label: 'Limited hours', emoji: '🟡' };
+            return { label: 'Offline', emoji: '⚪️' };
+        }
+
+        function renderAvailabilityTimeline() {
+            const timeline = document.getElementById('timeline');
+            if (!timeline) return;
+
+            const uniqueTimezones = [...new Set(tutorsData.map(t => t.timezone))];
+            let html = '';
+
+            uniqueTimezones.forEach(tz => {
+                const offset = timezoneOffsets[tz];
+                const localTime = getTimeInTimezone(offset);
+                const hour = localTime.getHours();
+                const status = getAvailabilityStatus(hour);
+                const tutorsInZone = tutorsData.filter(t => t.timezone === tz);
+
+                html += `
+                    <div class="timeline-row">
+                        <div class="timeline-zone">
+                            <div class="timeline-zone-name">${tz}</div>
+                            <div class="timeline-zone-time">${formatHour(localTime)}</div>
+                            <div class="timeline-zone-status">${status.emoji} ${status.label}</div>
+                        </div>
+                        <div class="timeline-track">
+                            ${tutorsInZone.map(tutor => `
+                                <button class="timeline-card" onclick="openTutorModal('${tutor.name}')">
+                                    <img src="${tutor.image}" alt="${tutor.name}" />
+                                    <div>
+                                        <div class="timeline-card-name">${tutor.name}</div>
+                                        <div class="timeline-card-meta">${tutor.subject} • ${tutor.location}</div>
+                                    </div>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            timeline.innerHTML = html;
+            const updated = document.getElementById('timelineUpdated');
+            if (updated) {
+                updated.textContent = `Updated at ${new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
+            }
+        }
+
+        // ===========================================
+        // INITIALIZATION
+        // Equivalent to React's useEffect with [] dependency
+        // ===========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render dynamic content
+            if (typeof renderTopics === 'function') {
+                renderTopics();
+            }
+            if (typeof renderCourses === 'function') {
+                renderCourses();
+            }
+            
+            // Initialize globe and location features
+            initializeGlobe();
+            renderLocationLegend();
+            renderAvailabilityTimeline();
+
+            setInterval(renderAvailabilityTimeline, 60000);
+            
+            // Setup event handlers
+            if (typeof setupMobileMenu === 'function') {
+                setupMobileMenu();
+            }
+            if (typeof setupThemeToggle === 'function') {
+                setupThemeToggle();
+            }
+            if (typeof setupForm === 'function') {
+                setupForm();
+            }
+            if (typeof setupSmoothScroll === 'function') {
+                setupSmoothScroll();
+            }
+            if (typeof updateAuthButtons === 'function') {
+                updateAuthButtons();
+            }
+            
+            console.log('TechLearn Hub loaded!');
+            console.log('This file demonstrates HTML/CSS/JS equivalents of React patterns.');
+        });
+
+    </script>
+</body>
+</html>
