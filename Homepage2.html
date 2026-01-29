@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADVANTA | Tech Learning Hub</title>
+    <meta name="description" content="A learning reference file showing the HTML, CSS, and JavaScript equivalent of the React/Tailwind TechLearn Hub website.">
+    <link rel="stylesheet" href="Homepage.css">
+    <!-- 
+    ===========================================
+    LEARNING REFERENCE FILE
+    ===========================================
+    This file demonstrates how the React/Tailwind 
+    website translates to plain HTML, CSS, and JavaScript.
+    
+    REACT CONCEPTS → VANILLA JS EQUIVALENTS:
+    - React Components → HTML sections/divs + JS functions
+    - useState → Regular JS variables + DOM manipulation
+    - onClick handlers → addEventListener or inline onclick
+    - className → class attribute
+    - Tailwind classes → CSS rules
+    - map() rendering → for loops or forEach
+    - Conditional rendering → if/else + DOM manipulation
+    -->
+</head>
+
+<body>
+    <!-- 
+    ===========================================
+    NAVIGATION (React: src/components/Navigation.tsx)
+    ===========================================
+    In React, this component uses:
+    - useState for isMenuOpen state
+    - onClick handlers for menu toggle
+    - ThemeToggle component for theme switching
+    -->
+    <header class="navigation">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="Homepage2.html" class="nav-logo">
+                <span>A</span>DVANTA
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="nav-links">
+                <!-- <a href="#topics" class="nav-link">Resources</a> -->
+                <a href="courses.html" class="nav-link">Courses</a>
+                <a href="user_progress.html" class="nav-link">My Progress</a>
+                <a href="tutors_page.html" class="nav-link">Tutors</a>
+                <a href="about.html" class="nav-link">About</a>
+                <!-- <a href="#contact" class="nav-link">Contact</a> --> 
+            </nav>
+
+            <!-- Desktop Actions -->
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <!-- Sun icon (for dark mode) -->
+                    <svg class="icon icon-sm" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <!-- Moon icon (for light mode) - hidden by default -->
+                    <svg class="icon icon-sm" id="moonIcon" style="display: none;" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button onclick="window.location.href='login.html'" class="btn btn-ghost">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream">Advanta Stream</button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <svg class="icon" id="menuIcon" viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="icon" id="closeIcon" style="display: none;" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#topics" class="nav-link">Topics</a>
+            <a href="#courses" class="nav-link">Courses</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#contact" class="nav-link">Contact</a>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button class="btn btn-ghost" style="flex: 1;">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream" style="flex: 1;">Advanta Stream</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 
+        ===========================================
+        HERO SECTION (React: src/components/Hero.tsx)
+        ===========================================
+        In React, this uses:
+        - Button component from shadcn/ui
+        - lucide-react icons (ArrowRight, BookOpen, Users, Star)
+        - Tailwind's gradient and animation classes
+        -->
+        <section class="hero">
+            <div class="hero-content">
+                <!-- Badge -->
+                <a href="#courses" class="hero-badge animate-fade-in-up" style="text-decoration: none;">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span>Start Learning Today</span>
+                </a>
+
+                <!-- Title -->
+                <h1 class="hero-title animate-fade-in-up animation-delay-100">
+                    <span class="highlight">ADVANTA</span><br>
+                    
+                </h1>
+                <div class="hero-badge hero-tagline animate-fade-in-up animation-delay-200">
+                    <span class="default-text">Made by Students for Students</span>
+                    <span class="hover-text">Made by Students FOR Students</span>
+                </div>
+                <!-- Subtitle -->
+                <p class="hero-subtitle animate-fade-in-up animation-delay-200">
+                    <!-- Join thousands of students learning computer science, engineering, 
+                    and cutting-edge tech skills through hands-on projects and expert instruction.
+                -->
+
+                    Served over (<strong>50,000</strong>) students worldwide, ADVANTA is your gateway to mastering technology skills for the future.
+                </p>
+
+                <!-- Buttons -->
+                <div class="hero-buttons animate-fade-in-up animation-delay-300">
+                    <button onclick="window.location.href='courses.html'" class="btn btn-primary btn-lg">
+                        Browse Courses
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                    <button onclick="window.location.href='advanta_stream.html'" class="btn btn-outline btn-lg">
+                        View Latest News in Tech
+                    </button>
+                </div>
+
+                <!-- Stats -->
+                <div class="hero-stats animate-fade-in-up animation-delay-300">
+                    <div class="stat-item">
+                        <div class="stat-value">20+</div>
+                        <div class="stat-label">Courses</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">50K+</div>
+                        <div class="stat-label">Students</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Tutors</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+        ===========================================
+        TOPICS SECTION (React: src/components/Services.tsx)
+        ===========================================
+        In React, this uses:
+        - Array.map() to render topic cards dynamically
+        - lucide-react icons for each topic
+        -->
+        <section class="topics-section" id="topics">
+            <div class="container">
+                <div class="section-header">
+                    <p class="section-label">Topics</p>
+                    <h2 class="section-title">What You Can Learn</h2>
+                    <p class="section-description">
+                        Explore our comprehensive curriculum covering the most in-demand technology skills.
+                    </p>
+                </div>
+
+                <!-- 
+                In React, this grid is generated with topics.map((topic, index) => ...)
+                Each topic object has: icon, title, description
+                -->
+                <div class="topics-grid" id="topicsGrid">
+                    <!-- Topics will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+        ===========================================
+        ABOUT SECTION (React: src/components/About.tsx)
+        ===========================================
+        -->
+        <section class="about-section" id="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-content">
+                        <p class="section-label">About Us</p>
+                        <h2 class="section-title">Learning Made Simple</h2>
+                        <p>
+                            TechLearn Hub was founded with a simple mission: make quality 
+                            technology education accessible to everyone, everywhere.
+                        </p>
+                        <p>
+                            Our platform combines expert-led courses with hands-on projects, 
+                            helping you build real skills that employers value. Whether you're 
+                            starting from scratch or advancing your career, we have the right 
+                            path for you.
+                        </p>
+                    </div>
+
+                    <div class="values-grid">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <circle cx="12" cy="12" r="6"></circle>
+                                    <circle cx="12" cy="12" r="2"></circle>
+                                </svg>
+                            </div>
+                            <h3 class="value-title">Goal-Oriented</h3>
+                            <p class="value-description">Structured paths to achieve your career goals</p>
+                        </div>
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                            <h3 class="value-title">Community</h3>
+                            <p class="value-description">Learn together with peers worldwide</p>
+                        </div>
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <line x1="9" y1="18" x2="15" y2="18"></line>
+                                    <line x1="10" y1="22" x2="14" y2="22"></line>
+                                    <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+                                </svg>
+                            </div>
+                            <h3 class="value-title">Practical</h3>
+                            <p class="value-description">Real projects, real-world skills</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+        ===========================================
+        COURSES SECTION (React: src/components/Portfolio.tsx)
+        ===========================================
+        In React, this uses:
+        - Array.map() to render course cards
+        - Helper function getLevelColor() for dynamic styling
+        -->
+        <section class="courses-section" id="courses">
+            <div class="container">
+                <div class="courses-header">
+                    <div>
+                        <p class="section-label">Featured Courses</p>
+                        <h2 class="section-title">Popular Courses</h2>
+                    </div>
+                    <button onclick="window.location.href='courses.html'" class="btn btn-outline">View All Courses</button>
+                </div>
+
+                <div class="courses-grid" id="coursesGrid">
+                    <!-- Courses will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+        ===========================================
+        CONTACT/CTA SECTION (React: src/components/Contact.tsx)
+        ===========================================
+        -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="cta-card">
+                    <h2 class="cta-title">Ready to Start Learning?</h2>
+                    <p class="cta-description">
+                        Join thousands of students already building their future with TechLearn Hub.
+                    </p>
+                    <form class="cta-form" id="ctaForm">
+                        <input 
+                            type="email" 
+                            class="cta-input" 
+                            placeholder="Enter your email"
+                            required
+                        >
+                        <button type="submit" class="btn btn-primary">Get Started Free</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy</a>
+                    <a href="#" class="footer-link">Terms</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+                <div class="footer-social">
+                    <a href="mailto:hello@advanta.com" class="social-link" aria-label="Email">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Chat">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- 
+    ===========================================
+    JAVASCRIPT
+    ===========================================
+    This section demonstrates vanilla JS equivalents of React patterns:
+    - useState → Regular variables + DOM updates
+    - useEffect → DOMContentLoaded or direct calls
+    - Array.map() for rendering → forEach with innerHTML
+    - onClick handlers → addEventListener
+    - Conditional rendering → if/else with style.display
+    -->
+    <script>
+        // ===========================================
+        // DATA (equivalent to component-level constants)
+        // In React, this data lives inside the component files
+        // ===========================================
+        
+        // Topics data (from Services.tsx)
+        const topics = [
+            {
+                icon: `<svg class="icon icon-lg" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
+                title: "Web Development",
+                description: "HTML, CSS, JavaScript, React, and modern frameworks"
+            },
+            {
+                icon: `<svg class="icon icon-lg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`,
+                title: "Computer Science",
+                description: "Algorithms, data structures, and CS fundamentals"
+            },
+            {
+                icon: `<svg class="icon icon-lg" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>`,
+                title: "Data Science",
+                description: "Python, machine learning, and data analysis"
+            },
+            {
+                icon: `<svg class="icon icon-lg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>`,
+                title: "Hardware & IoT",
+                description: "Arduino, Raspberry Pi, and embedded systems"
+            }
+        ];
+
+        // Courses data (from Portfolio.tsx)
+        const courses = [
+            {
+                title: "Complete React Developer",
+                category: "Web Development",
+                level: "Intermediate",
+                duration: "40 hours",
+                lessons: 85,
+                image: "https://placehold.co/400x250/61DAFB/000000?text=React+Developer"
+            },
+            {
+                title: "Python for Data Science",
+                category: "Data Science",
+                level: "Beginner",
+                duration: "35 hours",
+                lessons: 72,
+                image: "https://placehold.co/400x250/3776AB/FFFFFF?text=Python+Data+Science"
+            },
+            {
+                title: "Algorithms & Data Structures",
+                category: "Computer Science",
+                level: "Advanced",
+                duration: "50 hours",
+                lessons: 120,
+                image: "https://placehold.co/400x250/424242/FFFFFF?text=Algorithms"
+            },
+            {
+                title: "Machine Learning Fundamentals",
+                category: "Data Science",
+                level: "Intermediate",
+                duration: "45 hours",
+                lessons: 95,
+                image: "https://placehold.co/400x250/FF6F00/FFFFFF?text=Machine+Learning"
+            },
+            {
+                title: "Full Stack JavaScript",
+                category: "Web Development",
+                level: "Intermediate",
+                duration: "60 hours",
+                lessons: 150,
+                image: "https://placehold.co/400x250/F7DF1E/000000?text=JavaScript"
+            },
+            {
+                title: "Introduction to Programming",
+                category: "Computer Science",
+                level: "Beginner",
+                duration: "25 hours",
+                lessons: 50,
+                image: "https://placehold.co/400x250/2C3E50/FFFFFF?text=Programming"
+            }
+        ];
+
+        // ===========================================
+        // HELPER FUNCTIONS
+        // ===========================================
+
+        /**
+         * Get CSS class for course level badge
+         * React equivalent: getLevelColor() function in Portfolio.tsx
+         */
+        function getLevelClass(level) {
+            switch (level.toLowerCase()) {
+                case 'beginner':
+                    return 'level-beginner';
+                case 'intermediate':
+                    return 'level-intermediate';
+                case 'advanced':
+                    return 'level-advanced';
+                default:
+                    return '';
+            }
+        }
+
+        // ===========================================
+        // RENDER FUNCTIONS
+        // Equivalent to React's JSX return statements
+        // ===========================================
+
+        /**
+         * Render topics grid
+         * React equivalent: topics.map((topic, index) => <TopicCard />)
+         */
+        function renderTopics() {
+            const grid = document.getElementById('topicsGrid');
+            
+            grid.innerHTML = topics.map(topic => `
+                <div class="topic-card">
+                    <div class="topic-icon">
+                        ${topic.icon}
+                    </div>
+                    <h3 class="topic-title">${topic.title}</h3>
+                    <p class="topic-description">${topic.description}</p>
+                </div>
+            `).join('');
+        }
+
+        /**
+         * Render courses grid
+         * React equivalent: courses.map((course, index) => <CourseCard />)
+         */
+        function renderCourses() {
+            const grid = document.getElementById('coursesGrid');
+            
+            grid.innerHTML = courses.map(course => `
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="${course.image}" alt="${course.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="course-content">
+                        <div class="course-meta">
+                            <span class="course-category">${course.category}</span>
+                            <span class="course-level ${getLevelClass(course.level)}">${course.level}</span>
+                        </div>
+                        <h3 class="course-title">${course.title}</h3>
+                        <div class="course-stats">
+                            <span>⏱ ${course.duration}</span>
+                            <span>📚 ${course.lessons} lessons</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===========================================
+        // EVENT HANDLERS
+        // Equivalent to React's onClick, onChange, etc.
+        // ===========================================
+
+        /**
+         * Toggle mobile menu
+         * React equivalent: onClick={() => setIsMenuOpen(!isMenuOpen)}
+         */
+        function setupMobileMenu() {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            
+            // This is equivalent to React's useState for isMenuOpen
+            let isMenuOpen = false;
+
+            menuBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                
+                // Toggle menu visibility
+                // React would do: className={isMenuOpen ? 'mobile-menu active' : 'mobile-menu'}
+                mobileMenu.classList.toggle('active', isMenuOpen);
+                
+                // Toggle icons
+                menuIcon.style.display = isMenuOpen ? 'none' : 'block';
+                closeIcon.style.display = isMenuOpen ? 'block' : 'none';
+            });
+
+            // Close menu when clicking a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    isMenuOpen = false;
+                    mobileMenu.classList.remove('active');
+                    menuIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                });
+            });
+        }
+
+        /**
+         * Theme toggle functionality
+         * React equivalent: ThemeProvider with useTheme hook
+         */
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            // Check for saved theme preference
+            // React equivalent: localStorage.getItem in ThemeProvider
+            let isDark = localStorage.getItem('theme') !== 'light';
+            
+            function applyTheme() {
+                if (isDark) {
+                    document.body.classList.remove('light-theme');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                } else {
+                    document.body.classList.add('light-theme');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                }
+            }
+            
+            applyTheme();
+
+            themeToggle.addEventListener('click', () => {
+                isDark = !isDark;
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                applyTheme();
+            });
+        }
+
+        /**
+         * Form submission handler
+         * React equivalent: onSubmit={(e) => { e.preventDefault(); ... }}
+         */
+        function setupForm() {
+            const form = document.getElementById('ctaForm');
+            
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = form.querySelector('input').value;
+                
+                // In React, you might use toast() from sonner
+                alert(`Thanks for signing up with ${email}!`);
+                form.reset();
+            });
+        }
+
+        /**
+         * Smooth scroll for anchor links
+         * React equivalent: onClick with scrollIntoView
+         */
+        function setupSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(anchor.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        // ===========================================
+        // INITIALIZATION
+        // Equivalent to React's useEffect with [] dependency
+        // ===========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render dynamic content
+            renderTopics();
+            renderCourses();
+            
+            // Setup event handlers
+            setupMobileMenu();
+            setupThemeToggle();
+            setupForm();
+            setupSmoothScroll();
+            
+            console.log('TechLearn Hub loaded!');
+            console.log('This file demonstrates HTML/CSS/JS equivalents of React patterns.');
+        });
+    </script>
+</body>
+</html>
