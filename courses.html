@@ -1,0 +1,994 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
+    <link rel="stylesheet" href="Homepage.css">
+</head>
+<body>
+    <!--
+    <h1>Log In</h1>
+    <button onclick="window.location.href='index.html'" class="nav-link">Go Home</button>
+    -->
+    <header class="navigation">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="nav-logo">
+                <span>A</span>DVANTA
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="nav-links">
+                <!-- <a href="#topics" class="nav-link">Resources</a> -->
+                <a href="courses.html" class="nav-link">Courses</a>
+                <a href="user_progress.html" class="nav-link">My Progress</a>
+                <a href="tutors_page.html" class="nav-link">Tutors</a>
+                <a href="about.html" class="nav-link">About</a>
+                <!-- <a href="#contact" class="nav-link">Contact</a> --> 
+            </nav>
+
+            <!-- Desktop Actions -->
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <!-- Sun icon (for dark mode) -->
+                    <svg class="icon icon-sm" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                    </svg>
+                    <!-- Moon icon (for light mode) - hidden by default -->
+                    <svg class="icon icon-sm" id="moonIcon" style="display: none;" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button onclick="window.location.href='login.html'" class="btn btn-ghost" id="authButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream">Advanta Stream</button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <svg class="icon" id="menuIcon" viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="icon" id="closeIcon" style="display: none;" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="courses.html" class="nav-link">Courses</a>
+            <a href="user_progress.html" class="nav-link">My Progress</a>
+            <a href="tutors_page.html" class="nav-link">Tutors</a>
+            <a href="about.html" class="nav-link">About</a>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button class="btn btn-ghost" style="flex: 1;" id="mobileAuthButton">Sign In</button>
+                <button onclick="window.location.href='advanta_stream.html'" class="btn btn-advanta-stream" style="flex: 1;">Advanta Stream</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Header Section -->
+    <section style="background: linear-gradient(180deg, hsl(var(--primary) / 0.2) 0%, hsl(var(--accent) / 0.12) 35%, hsl(var(--background)) 100%); padding: 4.5rem 1.5rem 0; text-align: center; padding-bottom: 3rem;">
+        <div class="container" style="max-width: 900px;">
+            <div style="display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1.25rem; border-radius: 999px; background: hsl(var(--card) / 0.7); border: 1px solid hsl(var(--primary) / 0.35); color: hsl(var(--primary)); font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; font-size: 0.7rem;">
+                Explore Learning
+            </div>
+            <h1 style="margin-top: 1.25rem; font-size: 3.5rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                Courses
+            </h1>
+            <p style="margin-top: 1rem; font-size: 1.1rem; color: hsl(var(--muted-foreground));">
+                Discover and learn from our comprehensive course catalog.
+            </p>
+        </div>
+    </section>
+
+    <main>
+        <!-- 
+        ===========================================
+        COURSES SECTION (React: src/components/Portfolio.tsx)
+        ===========================================
+        In React, this uses:
+        - Array.map() to render course cards
+        - Helper function getLevelColor() for dynamic styling
+        -->
+        <section class="courses-section" id="courses" style="background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--background)) 100%); padding-top: 0;">
+            <div class="container" style="padding: 2rem 1.5rem;">
+                <!-- Search and Filter Controls -->
+                <div class="courses-controls mb-8" style="max-width: 1200px; margin: 0 auto;">
+                    <div class="flex flex-col md-flex-row gap-4 items-center">
+                        <!-- Search Bar -->
+                        <div class="relative flex-1">
+                            <input type="text" id="searchInput" placeholder="Search courses..." class="w-full pl-10 pr-4 py-3 rounded-full border border-border bg-card text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary">
+                            <svg class="absolute left-3 top-3.5 w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="M21 21l-4.35-4.35"></path>
+                            </svg>
+                        </div>
+                        
+                        <!-- Filter Button -->
+                        <div class="relative">
+                            <button id="filterButton" class="px-6 py-3 rounded-full border border-border bg-card text-foreground hover:bg-muted transition-colors flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                                </svg>
+                                Filter
+                            </button>
+                            
+                            <!-- Filter Dropdown -->
+                            <div id="filterDropdown" class="absolute top-full mt-2 w-64 bg-card border border-border rounded-lg shadow-lg p-4 hidden z-10">
+                                <div class="space-y-2">
+                                    <label class="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg hover:bg-muted/50 transition-colors">
+                                        <input type="checkbox" class="filter-checkbox" data-category="all" class="rounded">
+                                        <span class="text-foreground">All Categories</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg hover:bg-muted/50 transition-colors">
+                                        <input type="checkbox" class="filter-checkbox" data-category="web development" class="rounded">
+                                        <span class="text-foreground">Web Development</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg hover:bg-muted/50 transition-colors">
+                                        <input type="checkbox" class="filter-checkbox" data-category="data science" class="rounded">
+                                        <span class="text-foreground">Data Science</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg hover:bg-muted/50 transition-colors">
+                                        <input type="checkbox" class="filter-checkbox" data-category="computer science" class="rounded">
+                                        <span class="text-foreground">Computer Science</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container" style="padding: 0 1.5rem 2rem;">
+                <!-- Courses Grid -->
+                <div class="courses-grid grid grid-cols-1 md-grid-cols-2 lg-grid-cols-3 gap-6" id="coursesGrid">
+                    <!-- Courses will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy</a>
+                    <a href="#" class="footer-link">Terms</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+                <div class="footer-social">
+                    <a href="mailto:hello@advanta.com" class="social-link" aria-label="Email">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Chat">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 
+    ===========================================
+    JAVASCRIPT
+    ===========================================
+    This section demonstrates vanilla JS equivalents of React patterns:
+    - useState → Regular variables + DOM updates
+    - useEffect → DOMContentLoaded or direct calls
+    - Array.map() for rendering → forEach with innerHTML
+    - onClick handlers → addEventListener
+    - Conditional rendering → if/else with style.display
+    -->
+    <script>
+        // ===========================================
+        // DATA (equivalent to component-level constants)
+        // In React, this data lives inside the component files
+        // ===========================================
+        
+        // Topics data (from Services.tsx)
+        const topics = [
+            {
+                icon: `<svg class="icon icon-lg" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
+                title: "Web Development",
+                description: "HTML, CSS, JavaScript, React, and modern frameworks"
+            },
+            {
+                icon: `<svg class="icon icon-lg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`,
+                title: "Computer Science",
+                description: "Algorithms, data structures, and CS fundamentals"
+            },
+            {
+                icon: `<svg class="icon icon-lg" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>`,
+                title: "Data Science",
+                description: "Python, machine learning, and data analysis"
+            },
+            {
+                icon: `<svg class="icon icon-lg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>`,
+                title: "Hardware & IoT",
+                description: "Arduino, Raspberry Pi, and embedded systems"
+            }
+        ];
+
+        // Courses data (from Portfolio.tsx)
+        const courses = [
+            {
+                id: 0,
+                title: "Complete React Developer",
+                category: "Web Development",
+                level: "Intermediate",
+                duration: "40 hours",
+                weeks: 8,
+                lessons: 85,
+                image: "complete react developer.jpg",
+                description: "Master React and build modern web applications with this comprehensive course. Learn hooks, state management, routing, and best practices for production-ready applications.",
+                skills: ["React Fundamentals", "Hooks & State Management", "React Router", "Performance Optimization", "Testing with Jest", "Component Design Patterns"],
+                weeklyPlan: [
+                    "Week 1-2: React Fundamentals - JSX, Components, Props, State",
+                    "Week 3-4: Hooks Deep Dive - useState, useEffect, Custom Hooks",
+                    "Week 5: State Management - Context API, Redux Introduction",
+                    "Week 6: React Router - Routing & Navigation",
+                    "Week 7: Advanced Patterns - Error Boundaries, Code Splitting",
+                    "Week 8: Projects & Best Practices - Building a full application"
+                ]
+            },
+            {
+                id: 1,
+                title: "Python for Data Science",
+                category: "Data Science",
+                level: "Beginner",
+                duration: "35 hours",
+                weeks: 7,
+                lessons: 72,
+                image: "python data science.jpg",
+                description: "Learn Python programming with a focus on data science applications. Cover pandas, NumPy, matplotlib, and real-world data analysis projects.",
+                skills: ["Python Basics", "Data Structures", "Pandas & NumPy", "Data Visualization", "Data Cleaning", "Statistical Analysis"],
+                weeklyPlan: [
+                    "Week 1-2: Python Fundamentals - Variables, Control Flow, Functions",
+                    "Week 3: NumPy & Data Structures - Arrays and Matrix Operations",
+                    "Week 4: Pandas - DataFrames and Data Manipulation",
+                    "Week 5: Data Visualization - Matplotlib and Seaborn",
+                    "Week 6: Data Cleaning & Preprocessing - Real-world Techniques",
+                    "Week 7: Capstone Project - End-to-End Data Analysis"
+                ]
+            },
+            {
+                id: 2,
+                title: "Algorithms & Data Structures",
+                category: "Computer Science",
+                level: "Advanced",
+                duration: "50 hours",
+                weeks: 10,
+                lessons: 120,
+                image: "algorithms.jpg",
+                description: "Deep dive into algorithms and data structures. Master sorting, searching, dynamic programming, and graph algorithms used in technical interviews.",
+                skills: ["Sorting Algorithms", "Searching Techniques", "Graph Theory", "Dynamic Programming", "Greedy Algorithms", "Algorithm Analysis"],
+                weeklyPlan: [
+                    "Week 1-2: Basic Data Structures - Arrays, Linked Lists, Stacks, Queues",
+                    "Week 3-4: Trees & Graphs - Binary Trees, BSTs, Graph Traversal",
+                    "Week 5-6: Sorting & Searching - Merge Sort, Quick Sort, Binary Search",
+                    "Week 7-8: Dynamic Programming - Optimization, Memoization",
+                    "Week 9: Greedy & Graph Algorithms - Dijkstra, Minimum Spanning Trees",
+                    "Week 10: Complex Problem Solving - Competitive Programming"
+                ]
+            },
+            {
+                id: 3,
+                title: "Machine Learning Fundamentals",
+                category: "Data Science",
+                level: "Intermediate",
+                duration: "45 hours",
+                weeks: 9,
+                lessons: 95,
+                image: "machine learning.jpg",
+                description: "Introduction to machine learning with scikit-learn and TensorFlow. Learn supervised learning, unsupervised learning, and model evaluation techniques.",
+                skills: ["Supervised Learning", "Unsupervised Learning", "Model Evaluation", "Feature Engineering", "Neural Networks", "Model Deployment"],
+                weeklyPlan: [
+                    "Week 1-2: ML Fundamentals - Regression & Classification",
+                    "Week 3-4: Scikit-learn - Training and Evaluating Models",
+                    "Week 5: Unsupervised Learning - Clustering & Dimensionality Reduction",
+                    "Week 6-7: Feature Engineering - Selection & Preprocessing",
+                    "Week 8: Neural Networks & Deep Learning Introduction",
+                    "Week 9: Model Evaluation & Deployment - Real-world Applications"
+                ]
+            },
+            {
+                id: 4,
+                title: "Full Stack JavaScript",
+                category: "Web Development",
+                level: "Intermediate",
+                duration: "60 hours",
+                weeks: 12,
+                lessons: 150,
+                image: "full stack java script.jpg",
+                description: "Become a full-stack JavaScript developer. Learn Node.js, Express, MongoDB, and build complete web applications from frontend to backend.",
+                skills: ["JavaScript Advanced", "Node.js & Express", "MongoDB", "REST APIs", "Authentication & Security", "Deployment & DevOps"],
+                weeklyPlan: [
+                    "Week 1-3: Advanced JavaScript - Async, Promises, ES6+",
+                    "Week 4-5: Node.js & Express - Server Creation, Routing",
+                    "Week 6-7: MongoDB - Database Design & Queries",
+                    "Week 8-9: Building APIs - RESTful Design, Validation",
+                    "Week 10: Authentication & Security - JWT, Password Hashing",
+                    "Week 11-12: Full Application Development & Deployment"
+                ]
+            },
+            {
+                id: 5,
+                title: "Introduction to Programming",
+                category: "Computer Science",
+                level: "Beginner",
+                duration: "25 hours",
+                weeks: 5,
+                lessons: 50,
+                image: "introduction to programming.jpg",
+                description: "Start your programming journey with fundamental concepts. Learn variables, loops, conditionals, and functions using beginner-friendly examples.",
+                skills: ["Programming Fundamentals", "Variables & Data Types", "Control Flow", "Functions", "Problem Solving", "Debugging Basics"],
+                weeklyPlan: [
+                    "Week 1: Programming Basics - Variables, Data Types, Operators",
+                    "Week 2: Control Flow - If/Else, Loops",
+                    "Week 3: Functions - Definition, Parameters, Return Values",
+                    "Week 4: Problem Solving - Logic & Debugging",
+                    "Week 5: Project - Build Your First Program"
+                ]
+            },
+            {
+                id: 6,
+                title: "Vue.js Mastery",
+                category: "Web Development",
+                level: "Intermediate",
+                duration: "38 hours",
+                weeks: 8,
+                lessons: 92,
+                image: "vue.js.jpg",
+                description: "Learn Vue.js from basics to advanced. Build interactive single-page applications with Vue 3, composition API, and state management.",
+                skills: ["Vue.js 3", "Composition API", "Vue Router", "Pinia State Management", "Component Design", "Vue DevTools"],
+                weeklyPlan: [
+                    "Week 1-2: Vue.js Basics - Templates, Directives, Binding",
+                    "Week 3-4: Component Development - Props, Events, Slots",
+                    "Week 5: Composition API - Setup, Hooks, Reusability",
+                    "Week 6: Vue Router - Navigation & Dynamic Routes",
+                    "Week 7: State Management with Pinia",
+                    "Week 8: Building & Deploying Vue Applications"
+                ]
+            },
+            {
+                id: 7,
+                title: "Deep Learning with TensorFlow",
+                category: "Data Science",
+                level: "Advanced",
+                duration: "55 hours",
+                weeks: 11,
+                lessons: 110,
+                image: "deep learning.jpg",
+                description: "Master deep learning and neural networks using TensorFlow and Keras. Build CNNs, RNNs, and transformers for real-world applications.",
+                skills: ["TensorFlow/Keras", "Convolutional Neural Networks", "Recurrent Neural Networks", "Transformers", "Transfer Learning", "Model Optimization"],
+                weeklyPlan: [
+                    "Week 1-2: Neural Networks Fundamentals",
+                    "Week 3-4: CNNs for Image Classification",
+                    "Week 5-6: RNNs for Sequence Data",
+                    "Week 7-8: Advanced Architectures - Attention, Transformers",
+                    "Week 9: Transfer Learning & Fine-tuning",
+                    "Week 10-11: Production Models & Deployment"
+                ]
+            },
+            {
+                id: 8,
+                title: "Cloud Computing with AWS",
+                category: "Cloud Computing",
+                level: "Intermediate",
+                duration: "48 hours",
+                weeks: 10,
+                lessons: 115,
+                image: "cloud computing.jpg",
+                description: "Learn cloud infrastructure with AWS. Master EC2, S3, RDS, Lambda, and build scalable cloud applications.",
+                skills: ["AWS EC2", "AWS S3", "RDS Databases", "Lambda Functions", "CloudFormation", "IAM & Security"],
+                weeklyPlan: [
+                    "Week 1-2: AWS Fundamentals & Console",
+                    "Week 3-4: Compute Services - EC2, Lambda",
+                    "Week 5-6: Storage & Databases - S3, RDS",
+                    "Week 7: Networking & Content Delivery - VPC, CloudFront",
+                    "Week 8: Infrastructure as Code - CloudFormation",
+                    "Week 9-10: Scaling & Monitoring Applications"
+                ]
+            },
+            {
+                id: 9,
+                title: "iOS Development with Swift",
+                category: "Mobile Development",
+                level: "Intermediate",
+                duration: "45 hours",
+                weeks: 9,
+                lessons: 105,
+                image: "ios development.jpg",
+                description: "Build native iOS apps using Swift and SwiftUI. Learn app architecture, navigation, and publishing to the App Store.",
+                skills: ["Swift Programming", "SwiftUI", "UIKit", "Core Data", "Networking", "App Store Publishing"],
+                weeklyPlan: [
+                    "Week 1-2: Swift Fundamentals & Variables",
+                    "Week 3-4: SwiftUI Interface Building",
+                    "Week 5: State Management & Data Flow",
+                    "Week 6: Networking & APIs",
+                    "Week 7: Persistence with Core Data",
+                    "Week 8-9: Publishing & App Store Distribution"
+                ]
+            },
+            {
+                id: 10,
+                title: "Cybersecurity Essentials",
+                category: "Computer Science",
+                level: "Intermediate",
+                duration: "42 hours",
+                weeks: 9,
+                lessons: 98,
+                image: "cybersecurity.jpg",
+                description: "Learn cybersecurity fundamentals, common threats, and best practices for protecting applications and systems.",
+                skills: ["Network Security", "Cryptography", "Penetration Testing", "Threat Analysis", "Secure Coding", "Compliance & Standards"],
+                weeklyPlan: [
+                    "Week 1-2: Cybersecurity Fundamentals",
+                    "Week 3-4: Network Security & Firewalls",
+                    "Week 5: Cryptography & Encryption",
+                    "Week 6: Web Application Security",
+                    "Week 7: Penetration Testing Basics",
+                    "Week 8-9: Threat Detection & Response"
+                ]
+            },
+            {
+                id: 11,
+                title: "Android Development with Kotlin",
+                category: "Mobile Development",
+                level: "Intermediate",
+                duration: "48 hours",
+                weeks: 10,
+                lessons: 118,
+                image: "android development.jpg",
+                description: "Create powerful Android apps using Kotlin. Learn modern Android development with Jetpack, MVVM, and API integration.",
+                skills: ["Kotlin Programming", "Android Studio", "Jetpack Libraries", "MVVM Architecture", "Database Integration", "Firebase"],
+                weeklyPlan: [
+                    "Week 1-2: Kotlin Fundamentals",
+                    "Week 3-4: Android UI Development",
+                    "Week 5-6: Activities, Fragments & Navigation",
+                    "Week 7: MVVM & Architecture Patterns",
+                    "Week 8: Databases & Local Storage",
+                    "Week 9-10: APIs & Cloud Services"
+                ]
+            },
+            {
+                id: 12,
+                title: "Advanced SQL & Database Design",
+                category: "Computer Science",
+                level: "Advanced",
+                duration: "44 hours",
+                weeks: 9,
+                lessons: 108,
+                image: "SQL.jpg",
+                description: "Master SQL and relational database design. Learn optimization, indexing, transactions, and advanced query techniques.",
+                skills: ["SQL Queries", "Database Design", "Normalization", "Indexing & Performance", "Transactions", "Query Optimization"],
+                weeklyPlan: [
+                    "Week 1-2: Advanced SQL - Joins, Subqueries",
+                    "Week 3: Aggregations & Window Functions",
+                    "Week 4-5: Database Design & Normalization",
+                    "Week 6: Indexing & Query Optimization",
+                    "Week 7: Transactions & Locking",
+                    "Week 8-9: Complex Real-world Scenarios"
+                ]
+            },
+            {
+                id: 13,
+                title: "Natural Language Processing",
+                category: "Data Science",
+                level: "Advanced",
+                duration: "52 hours",
+                weeks: 11,
+                lessons: 125,
+                image: "language processing.jpg",
+                description: "Learn NLP techniques for text analysis, sentiment analysis, and language models. Work with transformers and BERT.",
+                skills: ["NLTK & spaCy", "Text Preprocessing", "Sentiment Analysis", "Named Entity Recognition", "BERT & Transformers", "Language Models"],
+                weeklyPlan: [
+                    "Week 1-2: NLP Fundamentals & Text Processing",
+                    "Week 3-4: Tokenization & Feature Extraction",
+                    "Week 5-6: Sentiment Analysis Projects",
+                    "Week 7-8: Advanced NLP with spaCy",
+                    "Week 9-10: Transformers & BERT",
+                    "Week 11: Building Production NLP Systems"
+                ]
+            },
+            {
+                id: 14,
+                title: "DevOps & CI/CD Pipelines",
+                category: "Cloud Computing",
+                level: "Intermediate",
+                duration: "46 hours",
+                weeks: 10,
+                lessons: 112,
+                image: "devops.jpg",
+                description: "Master DevOps practices, Docker containerization, and automated CI/CD pipelines for continuous deployment.",
+                skills: ["Docker & Containers", "Kubernetes", "CI/CD Pipelines", "Jenkins & GitLab CI", "Infrastructure Automation", "Monitoring & Logging"],
+                weeklyPlan: [
+                    "Week 1-2: Docker Fundamentals & Containers",
+                    "Week 3-4: Docker Compose & Multi-container Apps",
+                    "Week 5-6: Kubernetes Orchestration Basics",
+                    "Week 7: CI/CD with Jenkins",
+                    "Week 8: GitLab CI & Automated Testing",
+                    "Week 9-10: Monitoring, Logging & Deployment Strategies"
+                ]
+            },
+            {
+                id: 15,
+                title: "TypeScript for Modern Development",
+                category: "Web Development",
+                level: "Intermediate",
+                duration: "36 hours",
+                weeks: 8,
+                lessons: 88,
+                image: "typescript.jpg",
+                description: "Learn TypeScript to build scalable JavaScript applications. Master type systems, interfaces, and advanced type patterns.",
+                skills: ["TypeScript Basics", "Type System", "Interfaces & Generics", "Decorators", "Modules", "Type Safety in Projects"],
+                weeklyPlan: [
+                    "Week 1-2: TypeScript Fundamentals & Types",
+                    "Week 3: Interfaces & Type Annotations",
+                    "Week 4: Functions & Generics",
+                    "Week 5: Classes & OOP in TypeScript",
+                    "Week 6: Advanced Types & Decorators",
+                    "Week 7-8: Building Projects with TypeScript"
+                ]
+            },
+            {
+                id: 16,
+                title: "Computer Vision with OpenCV",
+                category: "Data Science",
+                level: "Advanced",
+                duration: "50 hours",
+                weeks: 10,
+                lessons: 120,
+                image: "computer vision.jpg",
+                description: "Master computer vision techniques using OpenCV and Python. Build image processing, object detection, and facial recognition systems.",
+                skills: ["Image Processing", "Feature Detection", "Object Detection", "Face Recognition", "Video Analysis", "Deep Learning for Vision"],
+                weeklyPlan: [
+                    "Week 1-2: OpenCV Fundamentals & Image Basics",
+                    "Week 3-4: Image Processing Techniques",
+                    "Week 5-6: Feature Detection & Matching",
+                    "Week 7-8: Object Detection Algorithms",
+                    "Week 9: Face & Emotion Recognition",
+                    "Week 10: Advanced Projects & Deployment"
+                ]
+            },
+            {
+                id: 17,
+                title: "GraphQL API Development",
+                category: "Web Development",
+                level: "Intermediate",
+                duration: "40 hours",
+                weeks: 8,
+                lessons: 95,
+                image: "API.jpg",
+                description: "Build modern APIs with GraphQL. Learn queries, mutations, subscriptions, and best practices for API design.",
+                skills: ["GraphQL Fundamentals", "Apollo Server", "Query & Mutations", "Subscriptions", "Schema Design", "Authentication in GraphQL"],
+                weeklyPlan: [
+                    "Week 1-2: GraphQL Fundamentals",
+                    "Week 3-4: Apollo Server Setup & Queries",
+                    "Week 5: Mutations & Subscriptions",
+                    "Week 6: Schema Design Best Practices",
+                    "Week 7: Authentication & Authorization",
+                    "Week 8: Building Production GraphQL APIs"
+                ]
+            },
+            {
+                id: 18,
+                title: "Blockchain & Cryptocurrency Development",
+                category: "Computer Science",
+                level: "Advanced",
+                duration: "56 hours",
+                weeks: 12,
+                lessons: 135,
+                image: "cryptocurrency.jpg",
+                description: "Learn blockchain technology, smart contracts, and build decentralized applications using Solidity and Web3.",
+                skills: ["Blockchain Fundamentals", "Solidity", "Smart Contracts", "Web3.js", "Ethereum", "DeFi Protocols"],
+                weeklyPlan: [
+                    "Week 1-2: Blockchain Fundamentals & Concepts",
+                    "Week 3-4: Cryptocurrency & Wallets",
+                    "Week 5-7: Solidity Smart Contract Development",
+                    "Week 8-9: Web3.js & DApp Development",
+                    "Week 10: Security & Best Practices",
+                    "Week 11-12: Building Real DApps"
+                ]
+            },
+            {
+                id: 19,
+                title: "Big Data with Apache Spark",
+                category: "Data Science",
+                level: "Advanced",
+                duration: "54 hours",
+                weeks: 11,
+                lessons: 128,
+                image: "big data.jpg",
+                description: "Process massive datasets with Apache Spark. Learn distributed computing, Spark SQL, and streaming data applications.",
+                skills: ["Apache Spark", "PySpark", "Spark SQL", "Distributed Computing", "Stream Processing", "Performance Tuning"],
+                weeklyPlan: [
+                    "Week 1-2: Big Data Concepts & Spark Basics",
+                    "Week 3-4: RDD & DataFrame Operations",
+                    "Week 5-6: Spark SQL for Data Analysis",
+                    "Week 7-8: Machine Learning with MLlib",
+                    "Week 9: Stream Processing with Spark Streaming",
+                    "Week 10-11: Cluster Setup & Performance Optimization"
+                ]
+            },
+            {
+                id: 20,
+                title: "Game Development with Unity",
+                category: "Web Development",
+                level: "Intermediate",
+                duration: "50 hours",
+                weeks: 10,
+                lessons: 125,
+                image: "game development.jpg",
+                description: "Create interactive 2D and 3D games using Unity and C#. Learn game mechanics, physics, and game design principles.",
+                skills: ["C# Programming", "Unity Engine", "Game Physics", "Animation Systems", "UI Design", "Game Deployment"],
+                weeklyPlan: [
+                    "Week 1-2: C# Basics for Game Development",
+                    "Week 3-4: Unity Interface & Game Objects",
+                    "Week 5-6: Physics & Collision Detection",
+                    "Week 7: Animation & Visual Effects",
+                    "Week 8: Audio & Input Systems",
+                    "Week 9-10: Complete Game Project & Publishing"
+                ]
+            }
+        ];
+
+        // ===========================================
+        // HELPER FUNCTIONS
+        // ===========================================
+
+        /**
+         * Get CSS class for course level badge
+         * React equivalent: getLevelColor() function in Portfolio.tsx
+         */
+        function getLevelClass(level) {
+            switch (level.toLowerCase()) {
+                case 'beginner':
+                    return 'level-beginner';
+                case 'intermediate':
+                    return 'level-intermediate';
+                case 'advanced':
+                    return 'level-advanced';
+                default:
+                    return '';
+            }
+        }
+
+        // ===========================================
+        // RENDER FUNCTIONS
+        // Equivalent to React's JSX return statements
+        // ===========================================
+
+        /**
+         * Render topics grid
+         * React equivalent: topics.map((topic, index) => <TopicCard />)
+         */
+        function renderTopics() {
+            const grid = document.getElementById('topicsGrid');
+            
+            grid.innerHTML = topics.map(topic => `
+                <div class="topic-card">
+                    <div class="topic-icon">
+                        ${topic.icon}
+                    </div>
+                    <h3 class="topic-title">${topic.title}</h3>
+                    <p class="topic-description">${topic.description}</p>
+                </div>
+            `).join('');
+        }
+
+        /**
+         * Render courses grid
+         * React equivalent: courses.map((course, index) => <CourseCard />)
+         */
+        function renderCourses(filteredCourses = courses) {
+            const grid = document.getElementById('coursesGrid');
+            
+            grid.innerHTML = filteredCourses.map(course => `
+                <div class="course-card bg-card border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer" onclick="window.location.href='course-detail.html?id=${course.id}'">
+                    <div class="course-image h-48 bg-muted flex items-center justify-center">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Crect fill='%23f0f0f0' width='400' height='200'/%3E%3C/svg%3E" data-src="${course.image}" alt="${course.title}" class="w-full h-full object-cover lazy-image">
+                    </div>
+                    <div class="p-6">
+                        <div class="course-meta" style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.75rem;">
+                            <span class="course-category px-5 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">${course.category}</span>
+                            <span class="course-level ${getLevelClass(course.level)} px-3 py-1 rounded-full text-xs font-semibold">${course.level}</span>
+                        </div>
+                        <h3 class="course-title text-xl font-semibold text-foreground mb-2">${course.title}</h3>
+                        <div class="flex items-center justify-between">
+                            <div class="course-stats text-muted-foreground text-sm">
+                                <span>⏱ ${course.duration}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===========================================
+        // FILTER AND SEARCH STATE
+        // ===========================================
+        let currentFilters = ['all'];
+        let searchTerm = '';
+
+        // ===========================================
+        // FILTER FUNCTIONS
+        // ===========================================
+
+        function filterCourses() {
+            let filtered = courses;
+
+            // Filter by search term
+            if (searchTerm) {
+                filtered = filtered.filter(course => 
+                    course.title.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+
+            // Filter by categories
+            if (!currentFilters.includes('all')) {
+                filtered = filtered.filter(course => 
+                    currentFilters.includes(course.category.toLowerCase())
+                );
+            }
+
+            renderCourses(filtered);
+        }
+
+        // ===========================================
+        // EVENT HANDLERS
+        // Equivalent to React's onClick, onChange, etc.
+        // ===========================================
+
+        /**
+         * Toggle mobile menu
+         * React equivalent: onClick={() => setIsMenuOpen(!isMenuOpen)}
+         */
+        function setupMobileMenu() {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            
+            // This is equivalent to React's useState for isMenuOpen
+            let isMenuOpen = false;
+
+            menuBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                
+                // Toggle menu visibility
+                // React would do: className={isMenuOpen ? 'mobile-menu active' : 'mobile-menu'}
+                mobileMenu.classList.toggle('active', isMenuOpen);
+                
+                // Toggle icons
+                menuIcon.style.display = isMenuOpen ? 'none' : 'block';
+                closeIcon.style.display = isMenuOpen ? 'block' : 'none';
+            });
+
+            // Close menu when clicking a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    isMenuOpen = false;
+                    mobileMenu.classList.remove('active');
+                    menuIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                });
+            });
+        }
+
+        /**
+         * Theme toggle functionality
+         * React equivalent: ThemeProvider with useTheme hook
+         */
+        function updateAuthButtons() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const authButton = document.getElementById('authButton');
+            const mobileAuthButton = document.getElementById('mobileAuthButton');
+            
+            if (isLoggedIn && authButton) {
+                const userName = localStorage.getItem('userName') || localStorage.getItem('userEmail') || 'User';
+                const firstName = userName.split(' ')[0];
+                
+                authButton.textContent = firstName;
+                authButton.onclick = () => window.location.href = 'account.html';
+                
+                if (mobileAuthButton) {
+                    mobileAuthButton.textContent = firstName;
+                    mobileAuthButton.onclick = () => window.location.href = 'account.html';
+                }
+            }
+        }
+
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            // Check for saved theme preference
+            // React equivalent: localStorage.getItem in ThemeProvider
+            let isDark = localStorage.getItem('theme') !== 'light';
+            
+            function applyTheme() {
+                if (isDark) {
+                    document.body.classList.remove('light-theme');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                } else {
+                    document.body.classList.add('light-theme');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                }
+            }
+            
+            applyTheme();
+
+            themeToggle.addEventListener('click', () => {
+                isDark = !isDark;
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                applyTheme();
+            });
+        }
+
+        /**
+         * Form submission handler
+         * React equivalent: onSubmit={(e) => { e.preventDefault(); ... }}
+         */
+        function setupForm() {
+            const form = document.getElementById('ctaForm');
+            
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = form.querySelector('input').value;
+                
+                // In React, you might use toast() from sonner
+                alert(`Thanks for signing up with ${email}!`);
+                form.reset();
+            });
+        }
+
+        /**
+         * Setup search and filter functionality
+         */
+        function setupSearchAndFilter() {
+            const searchInput = document.getElementById('searchInput');
+            const filterButton = document.getElementById('filterButton');
+            const filterDropdown = document.getElementById('filterDropdown');
+            const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+
+            // Set initial state - check "All Categories"
+            const allCheckbox = document.querySelector('.filter-checkbox[data-category="all"]');
+            allCheckbox.checked = true;
+
+            // Toggle filter dropdown
+            filterButton.addEventListener('click', () => {
+                filterDropdown.classList.toggle('hidden');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!filterButton.contains(e.target) && !filterDropdown.contains(e.target)) {
+                    filterDropdown.classList.add('hidden');
+                }
+            });
+
+            // Search input handler
+            searchInput.addEventListener('input', (e) => {
+                searchTerm = e.target.value;
+                filterCourses();
+            });
+
+            // Filter checkbox handlers
+            filterCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    const category = checkbox.dataset.category;
+                    
+                    if (category === 'all') {
+                        // If "All" is checked, uncheck others
+                        if (checkbox.checked) {
+                            filterCheckboxes.forEach(cb => {
+                                if (cb !== checkbox) cb.checked = false;
+                            });
+                            currentFilters = ['all'];
+                        } else {
+                            currentFilters = [];
+                        }
+                    } else {
+                        // If a specific category is checked/unchecked
+                        const allCheckbox = document.querySelector('.filter-checkbox[data-category="all"]');
+                        allCheckbox.checked = false;
+                        
+                        currentFilters = Array.from(filterCheckboxes)
+                            .filter(cb => cb.checked && cb.dataset.category !== 'all')
+                            .map(cb => cb.dataset.category);
+                        
+                        // If no categories selected, check "all"
+                        if (currentFilters.length === 0) {
+                            allCheckbox.checked = true;
+                            currentFilters = ['all'];
+                        }
+                    }
+                    
+                    filterCourses();
+                });
+            });
+        }
+
+        /**
+         * Smooth scroll for anchor links
+         * React equivalent: onClick with scrollIntoView
+         */
+        function setupSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(anchor.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        // ===========================================
+        // INITIALIZATION
+        // Equivalent to React's useEffect with [] dependency
+        // ===========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render dynamic content
+            // renderTopics();  // Not needed in courses page
+            renderCourses();
+            
+            // Initialize lazy loading for images
+            initializeLazyLoading();
+            
+            // Setup event handlers
+            setupMobileMenu();
+            setupThemeToggle();
+            updateAuthButtons();
+            // setupForm();  // Not needed in courses page
+            setupSearchAndFilter();
+            setupSmoothScroll();
+            
+            console.log('TechLearn Hub loaded!');
+            console.log('This file demonstrates HTML/CSS/JS equivalents of React patterns.');
+        });
+        
+        function initializeLazyLoading() {
+            const lazyImages = document.querySelectorAll('.lazy-image');
+            
+            // Use Intersection Observer for efficient lazy loading
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            img.classList.remove('lazy-image');
+                            observer.unobserve(img);
+                        }
+                    });
+                }, { rootMargin: '50px' });
+                
+                lazyImages.forEach(img => imageObserver.observe(img));
+            } else {
+                // Fallback for older browsers
+                lazyImages.forEach(img => {
+                    img.src = img.dataset.src;
+                });
+            }
+        }
+    </script>
+</body>
+</html>
