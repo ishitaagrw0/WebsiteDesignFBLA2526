@@ -147,6 +147,16 @@
                     </div>
                 </div>
 
+                <!-- Resources Section (Only for Python for Data Science) -->
+                <div id="resourcesSection" style="display: none; margin-bottom: 4rem;">
+                    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: hsl(var(--foreground));">
+                        📚 Recommended Resources
+                    </h2>
+                    <div id="resourcesContainer" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+                        <!-- Resources will be inserted here -->
+                    </div>
+                </div>
+
                 <!-- Start Course Button -->
                 <div id="start-button" style="text-align: center; padding: 3rem 2rem; background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--accent) / 0.1)); border-radius: 1rem; border: 2px solid hsl(var(--border));">
                     <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: hsl(var(--foreground));">
@@ -230,6 +240,50 @@
                     "Week 5: Data Visualization - Matplotlib and Seaborn",
                     "Week 6: Data Cleaning & Preprocessing - Real-world Techniques",
                     "Week 7: Capstone Project - End-to-End Data Analysis"
+                ],
+                resources: [
+                    {
+                        title: "Python for Data Science - Full Course",
+                        type: "Video",
+                        duration: "12 hours",
+                        link: "https://www.youtube.com/results?search_query=python+data+science+course",
+                        description: "Comprehensive video course covering all Python data science fundamentals"
+                    },
+                    {
+                        title: "Pandas Tutorial & Documentation",
+                        type: "Documentation",
+                        duration: "Self-paced",
+                        link: "https://pandas.pydata.org/docs/",
+                        description: "Official pandas documentation with tutorials and API reference"
+                    },
+                    {
+                        title: "NumPy Beginners Guide",
+                        type: "Video",
+                        duration: "4 hours",
+                        link: "https://www.youtube.com/results?search_query=numpy+tutorial",
+                        description: "Learn NumPy arrays, operations, and scientific computing basics"
+                    },
+                    {
+                        title: "Matplotlib Data Visualization",
+                        type: "Tutorial",
+                        duration: "3 hours",
+                        link: "https://matplotlib.org/stable/tutorials/index.html",
+                        description: "Master data visualization with matplotlib for exploratory analysis"
+                    },
+                    {
+                        title: "Real-world Data Analysis Projects",
+                        type: "Project",
+                        duration: "5 hours",
+                        link: "https://github.com/topics/data-analysis-python",
+                        description: "GitHub projects showcasing real-world data analysis with Python"
+                    },
+                    {
+                        title: "Python Data Science Handbook",
+                        type: "eBook",
+                        duration: "Self-paced",
+                        link: "https://jakevdp.github.io/PythonDataScienceHandbook/",
+                        description: "Free online handbook by Jake VanderPlas covering Python data science tools"
+                    }
                 ]
             },
             {
@@ -733,6 +787,36 @@
                     <p style="color: hsl(var(--primary)); font-weight: 600;">${skill}</p>
                 </div>
             `).join('');
+            
+            // Populate resources if they exist
+            if (course.resources && course.resources.length > 0) {
+                const resourcesSection = document.getElementById('resourcesSection');
+                resourcesSection.style.display = 'block';
+                
+                const resourcesContainer = document.getElementById('resourcesContainer');
+                resourcesContainer.innerHTML = course.resources.map(resource => `
+                    <div style="padding: 1.5rem; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 0.75rem; transition: all 0.3s ease; cursor: pointer;" 
+                         onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" 
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <div>
+                                <h3 style="color: hsl(var(--foreground)); font-weight: 700; margin-bottom: 0.5rem; font-size: 1.1rem;">${resource.title}</h3>
+                                <p style="color: hsl(var(--muted-foreground)); font-size: 0.9rem; margin-bottom: 0.5rem;">${resource.description}</p>
+                            </div>
+                            <span style="padding: 0.4rem 0.8rem; background: hsl(var(--primary) / 0.2); color: hsl(var(--primary)); border-radius: 0.4rem; font-size: 0.85rem; font-weight: 600; white-space: nowrap;">${resource.type}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: hsl(var(--muted-foreground)); font-size: 0.9rem;">⏱️ ${resource.duration}</span>
+                            <a href="${resource.link}" target="_blank" style="color: hsl(var(--primary)); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s;">
+                                Access Resource
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+            }
         }
 
         function startCourse() {
