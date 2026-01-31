@@ -597,16 +597,8 @@
         }
 
         function displayWelcomeMessage() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            
-            if (isLoggedIn) {
-                const userName = localStorage.getItem('userName') || 'User';
-                const welcomeBar = document.getElementById('welcomeBar');
-                const welcomeText = document.getElementById('welcomeText');
-                
-                welcomeText.textContent = userName;
-                welcomeBar.style.display = 'block';
-            }
+            // Welcome message is only displayed on My Progress tab, not on homepage
+            // Removing this function call from homepage initialization
         }
 
         function setupThemeToggle() {
